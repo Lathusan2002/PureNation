@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events - Pure Nation</title>
+    <meta name="description" content="Join cleanup events across Sri Lanka" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+      .filter-section {
+        background-color: var(--muted);
+        padding: 2rem 0;
+      }
+      .filter-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+      }
+      .search-box {
+        flex: 1;
+        min-width: 250px;
+      }
+      .search-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 0.375rem;
+      }
+      .filter-dropdown {
+        min-width: 150px;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 0.375rem;
+      }
+      .events-list {
+        padding: 3rem 0;
+      }
+      .events-grid {
+        margin-bottom: 2rem;
+      }
+      .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .page-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.375rem;
+        border: 1px solid var(--border);
+      }
+      .page-link.active {
+        background-color: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar - same as index.html -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-content">
+          <a href="/" class="logo">
+            <i class="fas fa-leaf"></i>
+            <span>Pure Nation</span>
+          </a>
+          <div class="nav-links" id="navLinks">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/events.html" class="nav-link">Events</a>
+            <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
+            <a href="/" class="btn-primary">Get Involved</a>
+          </div>
+          <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="hero" style="padding: 5rem 0;">
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <h1>Cleanup Events</h1>
+          <p>Find and join cleanup initiatives happening across Sri Lanka</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+      <div class="container">
+        <div class="filter-container">
+          <div class="search-box">
+            <input type="text" placeholder="Search events..." class="search-input" id="eventSearch">
+          </div>
+          <select class="filter-dropdown" id="locationFilter">
+            <option value="">All Locations</option>
+            <option value="Colombo">Colombo</option>
+            <option value="Kandy">Kandy</option>
+            <option value="Galle">Galle</option>
+            <option value="Negombo">Negombo</option>
+          </select>
+          <select class="filter-dropdown" id="typeFilter">
+            <option value="">All Types</option>
+            <option value="Beach">Beach</option>
+            <option value="Forest">Forest</option>
+            <option value="River">River</option>
+            <option value="Urban">Urban</option>
+          </select>
+          <select class="filter-dropdown" id="statusFilter">
+            <option value="">All Status</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events List -->
+    <section class="events-list">
+      <div class="container">
+        <div class="events-grid" id="allEventsGrid">
+          <!-- Events will be loaded by JavaScript -->
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination" id="eventsPagination">
+          <a href="#" class="page-link active">1</a>
+          <a href="#" class="page-link">2</a>
+          <a href="#" class="page-link">3</a>
+          <a href="#" class="page-link"><i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer - same as index.html -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-info">
+            <a href="/" class="logo">
+              <i class="fas fa-leaf"></i>
+              <span>Pure Nation</span>
+            </a>
+            <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental awareness.</p>
+            <div class="social-links">
+              <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="/">How to Volunteer</a></li>
+              <li><a href="/">Sponsorship Opportunities</a></li>
+              <li><a href="/">Education Materials</a></li>
+              <li><a href="/">Waste Management Tips</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h3>Contact Us</h3>
+            <p>Have questions or suggestions? We'd love to hear from you.</p>
+            <form id="contactForm">
+              <input type="email" placeholder="Your email" required>
+              <textarea placeholder="Your message" rows="3" required></textarea>
+              <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; <span id="currentYear"></span> Pure Nation. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Additional data for events page
+      const allEventsData = [
+        ...eventData,
+        {
+          id: 5,
+          title: "Sigiriya Area Restoration",
+          date: "2023-07-12",
+          time: "8:00 AM",
+          location: "Sigiriya",
+          description: "Help us clean the surrounding areas of this historic site and preserve its natural beauty.",
+          image: "https://source.unsplash.com/random/800x600/?sigiriya,landscape",
+          status: "active",
+          tags: ["Historical", "Tourism", "Conservation"],
+          volunteersJoined: 22,
+          volunteersNeeded: 40,
+          sponsor: "Heritage Conservation Trust"
+        },
+        {
+          id: 6,
+          title: "Trincomalee Beach Cleanup",
+          date: "2023-07-18",
+          time: "7:30 AM",
+          location: "Trincomalee",
+          description: "Join us at one of Sri Lanka's most beautiful beaches to remove plastic waste and debris.",
+          image: "https://source.unsplash.com/random/800x600/?beach,trincomalee",
+          status: "active",
+          tags: ["Beach", "Plastic", "Marine"],
+          volunteersJoined: 15,
+          volunteersNeeded: 35,
+          sponsor: "Ocean Savers"
+        },
+        {
+          id: 7,
+          title: "Nuwara Eliya Park Renewal",
+          date: "2023-06-10",
+          time: "9:00 AM",
+          location: "Nuwara Eliya",
+          description: "Help us clean and renew Victoria Park, one of the most visited attractions in Nuwara Eliya.",
+          image: "https://source.unsplash.com/random/800x600/?park,garden",
+          status: "completed",
+          tags: ["Park", "Urban", "Tourism"],
+          volunteersJoined: 40,
+          volunteersNeeded: 40,
+          sponsor: "City Beautification Committee"
+        },
+        {
+          id: 8,
+          title: "Batticaloa Lagoon Cleanup",
+          date: "2023-07-25",
+          time: "8:00 AM",
+          location: "Batticaloa",
+          description: "Join our efforts to clean up the Batticaloa Lagoon and protect this vital ecosystem.",
+          image: "https://source.unsplash.com/random/800x600/?lagoon,water",
+          status: "active",
+          tags: ["Lagoon", "Water", "Ecosystem"],
+          volunteersJoined: 12,
+          volunteersNeeded: 30
+        }
+      ];
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Load all events
+        const eventsGrid = document.getElementById('allEventsGrid');
+        if (eventsGrid) {
+          loadEvents(allEventsData, eventsGrid);
+        }
+        
+        // Set up event listeners for filters
+        setupFilters();
+      });
+
+      function loadEvents(events, container) {
+        // Clear container first
+        container.innerHTML = '';
+        
+        if (events.length === 0) {
+          container.innerHTML = '<p class="text-center" style="grid-column: 1/-1;">No events found matching your criteria.</p>';
+          return;
+        }
+        
+        events.forEach(event => {
+          const eventCard = document.createElement('div');
+          eventCard.className = 'event-card';
+          
+          // Calculate progress percentage
+          const progressPercent = (event.volunteersJoined / event.volunteersNeeded) * 100;
+          
+          // Format date
+          const eventDate = new Date(event.date);
+          const formattedDate = eventDate.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric', 
+            year: 'numeric'
+          });
+          
+          eventCard.innerHTML = `
+            <div class="event-image">
+              <img src="${event.image}" alt="${event.title}">
+              ${event.status === 'active' ? 
+                '<div class="event-status status-active">Active</div>' : 
+                '<div class="event-status status-completed">Completed</div>'
+              }
+            </div>
+            <div class="event-content">
+              <div class="event-tags">
+                ${event.tags.map(tag => `<span class="event-tag">${tag}</span>`).join('')}
+              </div>
+              <h3 class="event-title">${event.title}</h3>
+              <div class="event-meta">
+                <i class="fas fa-calendar"></i>
+                <span>${formattedDate} • ${event.time}</span>
+              </div>
+              <div class="event-meta">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>${event.location}</span>
+              </div>
+              <p class="event-description">${event.description}</p>
+              <div class="volunteer-progress">
+                <div class="progress-header">
+                  <span><i class="fas fa-users"></i> Volunteers</span>
+                  <span>${event.volunteersJoined}/${event.volunteersNeeded}</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                </div>
+              </div>
+              ${event.sponsor ? `<div class="event-sponsor">Sponsored by <span>${event.sponsor}</span></div>` : ''}
+              <a href="/event-details.html?id=${event.id}" class="btn-primary" style="width: 100%; text-align: center;">
+                ${event.status === 'completed' ? 'View Details' : 'Join Cleanup'}
+              </a>
+            </div>
+          `;
+          
+          container.appendChild(eventCard);
+        });
+      }
+
+      function setupFilters() {
+        const searchInput = document.getElementById('eventSearch');
+        const locationFilter = document.getElementById('locationFilter');
+        const typeFilter = document.getElementById('typeFilter');
+        const statusFilter = document.getElementById('statusFilter');
+        const eventsGrid = document.getElementById('allEventsGrid');
+        
+        if (searchInput && locationFilter && typeFilter && statusFilter && eventsGrid) {
+          const filterEvents = () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const location = locationFilter.value.toLowerCase();
+            const type = typeFilter.value.toLowerCase();
+            const status = statusFilter.value.toLowerCase();
+            
+            const filteredEvents = allEventsData.filter(event => {
+              // Search term filter
+              const matchesSearch = 
+                event.title.toLowerCase().includes(searchTerm) || 
+                event.description.toLowerCase().includes(searchTerm) ||
+                event.location.toLowerCase().includes(searchTerm);
+              
+              // Location filter
+              const matchesLocation = location === '' || event.location.toLowerCase().includes(location);
+              
+              // Type filter (match against tags)
+              const matchesType = type === '' || event.tags.some(tag => tag.toLowerCase() === type);
+              
+              // Status filter
+              const matchesStatus = status === '' || event.status.toLowerCase() === status;
+              
+              return matchesSearch && matchesLocation && matchesType && matchesStatus;
+            });
+            
+            loadEvents(filteredEvents, eventsGrid);
+          };
+          
+          searchInput.addEventListener('input', filterEvents);
+          locationFilter.addEventListener('change', filterEvents);
+          typeFilter.addEventListener('change', filterEvents);
+          statusFilter.addEventListener('change', filterEvents);
+        }
+        
+        // Set up pagination (simple client-side pagination for demo)
+        const paginationLinks = document.querySelectorAll('.page-link');
+        paginationLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Remove active class from all links
+            paginationLinks.forEach(l => l.classList.remove('active'));
+            // Add active class to clicked link
+            this.classList.add('active');
+            // In a real app, we'd load the appropriate page of results here
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

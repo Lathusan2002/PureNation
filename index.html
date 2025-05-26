@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pure Nation - Sri Lanka Green Up</title>
+    <meta
+      name="description"
+      content="Working together to create a cleaner, greener Sri Lanka"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-content">
+          <a href="/" class="logo">
+            <i class="fas fa-leaf"></i>
+            <span>Pure Nation</span>
+          </a>
+          <div class="nav-links" id="navLinks">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/events.html" class="nav-link">Events</a>
+            <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
+            <a class="nav-link" href="signin.html">
+              <button class="nav-link">Get Involved</button>
+            </a>
+          </div>
+          <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <h1>Let's Make Sri Lanka Clean, Green and Beautiful Together</h1>
+          <p>
+            Join our movement to create a cleaner environment through community
+            action and volunteer projects across Sri Lanka.
+          </p>
+          <div class="hero-buttons">
+            <a href="/events.html" class="btn-primary">Join a Cleanup</a>
+            <a href="/sponsor.html" class="btn-outline">Become a Sponsor</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Statement -->
+    <section class="mission">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Mission</h2>
+          <p>
+            Pure Nation is dedicated to making Sri Lanka cleaner, greener, and
+            more beautiful through community action and environmental awareness.
+          </p>
+        </div>
+        <div class="mission-grid">
+          <div class="mission-item">
+            <div class="icon-circle">
+              <i class="fas fa-leaf"></i>
+            </div>
+            <h3>Clean Environment</h3>
+            <p>
+              We organize community cleanup events across Sri Lanka to reduce
+              pollution and improve our environment.
+            </p>
+          </div>
+          <div class="mission-item">
+            <div class="icon-circle icon-shield">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Environmental Education</h3>
+            <p>
+              We raise awareness about environmental issues and promote
+              sustainable waste management practices.
+            </p>
+          </div>
+          <div class="mission-item">
+            <div class="icon-circle icon-award">
+              <i class="fas fa-award"></i>
+            </div>
+            <h3>Volunteer Recognition</h3>
+            <p>
+              We acknowledge and reward volunteers who contribute their time and
+              effort to environmental causes.
+            </p>
+          </div>
+          <div class="mission-item">
+            <div class="icon-circle icon-users">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Community Building</h3>
+            <p>
+              We foster a community of environmentally conscious citizens
+              working together for a better Sri Lanka.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Impact So Far</h2>
+          <p>
+            Together, we've made significant progress in making Sri Lanka
+            cleaner and more beautiful
+          </p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-trash"></i>
+            </div>
+            <div class="stat-number">15,000+</div>
+            <p>Kilograms of Waste Collected</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="stat-number">50+</div>
+            <p>Locations Cleaned</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-number">1,250+</div>
+            <p>Active Volunteers</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon">
+              <i class="fas fa-calendar"></i>
+            </div>
+            <div class="stat-number">150+</div>
+            <p>Clean-up Events</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Events -->
+    <section class="featured-events">
+      <div class="container">
+        <div class="section-header-with-link">
+          <div>
+            <h2>Featured Cleanup Events</h2>
+            <p>
+              Join these upcoming events and make a difference in your community
+            </p>
+          </div>
+          <a href="/events.html" class="view-all"
+            >View all events <i class="fas fa-arrow-right"></i
+          ></a>
+        </div>
+        <div class="events-grid" id="featuredEvents">
+          <!-- Event cards will be loaded by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section class="leaderboard">
+      <div class="container">
+        <div class="section-header">
+          <h2>Top Volunteers</h2>
+          <p>
+            Recognizing the dedication and hard work of our most active
+            volunteers
+          </p>
+        </div>
+        <div class="leaderboard-container">
+          <div class="leaderboard-list" id="leaderboardList">
+            <!-- Leaderboard items will be loaded by JavaScript -->
+          </div>
+          <div class="text-center">
+            <a href="/leaderboard.html" class="btn-outline"
+              >View Full Leaderboard</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+      <div class="container">
+        <div class="cta-card">
+          <div class="cta-content">
+            <div class="cta-text">
+              <h2>Ready to Make a Difference?</h2>
+              <p>
+                Join our growing community of volunteers and sponsors who are
+                working together to create a cleaner, greener Sri Lanka. Every
+                action counts!
+              </p>
+              <div class="cta-buttons">
+                <a href="/events.html" class="btn-primary">Join as Volunteer</a>
+                <a href="/sponsor.html" class="btn-secondary"
+                  >Become a Sponsor</a
+                >
+              </div>
+            </div>
+            <div class="cta-stats">
+              <div class="cta-stat">
+                <div class="cta-stat-number">1,250+</div>
+                <div class="cta-stat-label">Volunteers</div>
+              </div>
+              <div class="cta-stat">
+                <div class="cta-stat-number">150+</div>
+                <div class="cta-stat-label">Clean-up Events</div>
+              </div>
+              <div class="cta-stat">
+                <div class="cta-stat-number">75+</div>
+                <div class="cta-stat-label">Sponsors</div>
+              </div>
+              <div class="cta-stat">
+                <div class="cta-stat-number">25+</div>
+                <div class="cta-stat-label">Locations</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-info">
+            <a href="/" class="logo">
+              <i class="fas fa-leaf"></i>
+              <span>Pure Nation</span>
+            </a>
+            <p>
+              Working together to create a cleaner, greener Sri Lanka through
+              community action and environmental awareness.
+            </p>
+            <div class="social-links">
+              <a href="#" class="social-link"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="social-link"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-link"
+                ><i class="fas fa-envelope"></i
+              ></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="/">How to Volunteer</a></li>
+              <li><a href="/">Sponsorship Opportunities</a></li>
+              <li><a href="/">Education Materials</a></li>
+              <li><a href="/">Waste Management Tips</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h3>Contact Us</h3>
+            <p>Have questions or suggestions? We'd love to hear from you.</p>
+            <form id="contactForm">
+              <input type="email" placeholder="Your email" required />
+              <textarea placeholder="Your message" rows="3" required></textarea>
+              <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            &copy; <span id="currentYear"></span> Pure Nation. All rights
+            reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

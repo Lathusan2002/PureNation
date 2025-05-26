@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard - Pure Nation</title>
+    <meta name="description" content="Top volunteers and contributors to Sri Lanka's cleanup efforts" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+      .leaderboard-page {
+        padding: 3rem 0;
+      }
+      .leaderboard-tabs {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 2rem;
+      }
+      .leaderboard-tab {
+        padding: 1rem 2rem;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+      }
+      .leaderboard-tab.active {
+        border-bottom: 2px solid var(--primary);
+        color: var(--primary);
+        font-weight: 500;
+      }
+      .achievement-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.5rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        color: var(--card);
+        background-color: var(--text-light);
+      }
+      .achievement-badge i {
+        margin-right: 0.25rem;
+      }
+      .badge-gold {
+        background-color: #fbbf24;
+      }
+      .badge-silver {
+        background-color: #94a3b8;
+      }
+      .badge-bronze {
+        background-color: #b45309;
+      }
+      .rank-1 .leaderboard-item {
+        background-color: rgba(251, 191, 36, 0.1);
+      }
+      .rank-2 .leaderboard-item {
+        background-color: rgba(148, 163, 184, 0.1);
+      }
+      .rank-3 .leaderboard-item {
+        background-color: rgba(180, 83, 9, 0.1);
+      }
+      .full-leaderboard {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .leaderboard-row {
+        background-color: var(--card);
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      }
+      .user-achievements {
+        padding: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      @media (max-width: 768px) {
+        .leaderboard-tab {
+          padding: 0.75rem 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar - same as index.html -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-content">
+          <a href="/" class="logo">
+            <i class="fas fa-leaf"></i>
+            <span>Pure Nation</span>
+          </a>
+          <div class="nav-links" id="navLinks">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/events.html" class="nav-link">Events</a>
+            <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
+            <a href="/" class="btn-primary">Get Involved</a>
+          </div>
+          <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="hero" style="padding: 5rem 0;">
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <h1>Volunteer Leaderboard</h1>
+          <p>Recognizing the dedication and hard work of our most active community members</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section class="leaderboard-page">
+      <div class="container">
+        <!-- Tabs for different leaderboards -->
+        <div class="leaderboard-tabs">
+          <div class="leaderboard-tab active" data-tab="all-time">All Time</div>
+          <div class="leaderboard-tab" data-tab="monthly">This Month</div>
+          <div class="leaderboard-tab" data-tab="weekly">This Week</div>
+        </div>
+        
+        <div class="full-leaderboard" id="fullLeaderboard">
+          <!-- Leaderboard items will be loaded by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer - same as index.html -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-info">
+            <a href="/" class="logo">
+              <i class="fas fa-leaf"></i>
+              <span>Pure Nation</span>
+            </a>
+            <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental awareness.</p>
+            <div class="social-links">
+              <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="/">How to Volunteer</a></li>
+              <li><a href="/">Sponsorship Opportunities</a></li>
+              <li><a href="/">Education Materials</a></li>
+              <li><a href="/">Waste Management Tips</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h3>Contact Us</h3>
+            <p>Have questions or suggestions? We'd love to hear from you.</p>
+            <form id="contactForm">
+              <input type="email" placeholder="Your email" required>
+              <textarea placeholder="Your message" rows="3" required></textarea>
+              <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; <span id="currentYear"></span> Pure Nation. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Extended leaderboard data for the full page
+      const fullLeaderboardData = [
+        ...leaderboardData,
+        {
+          id: 6,
+          name: "Dilshan Perera",
+          avatar: "https://i.pravatar.cc/150?img=6",
+          eventsParticipated: 14,
+          hoursContributed: 56,
+          points: 2750,
+          achievements: ["Beach Cleanup Pro", "Tree Planter", "Community Leader"]
+        },
+        {
+          id: 7,
+          name: "Kumari Bandara",
+          avatar: "https://i.pravatar.cc/150?img=7",
+          eventsParticipated: 13,
+          hoursContributed: 52,
+          points: 2590,
+          achievements: ["River Guardian", "Waste Warrior"]
+        },
+        {
+          id: 8,
+          name: "Rajitha De Silva",
+          avatar: "https://i.pravatar.cc/150?img=8",
+          eventsParticipated: 12,
+          hoursContributed: 48,
+          points: 2420,
+          achievements: ["Plastic Fighter", "Ocean Friend"]
+        },
+        {
+          id: 9,
+          name: "Nilmini Fernando",
+          avatar: "https://i.pravatar.cc/150?img=9",
+          eventsParticipated: 11,
+          hoursContributed: 44,
+          points: 2280,
+          achievements: ["Earth Defender", "Wildlife Protector"]
+        },
+        {
+          id: 10,
+          name: "Chathura Mendis",
+          avatar: "https://i.pravatar.cc/150?img=10",
+          eventsParticipated: 10,
+          hoursContributed: 40,
+          points: 2150,
+          achievements: ["Urban Cleaner", "Environmental Educator"]
+        },
+        {
+          id: 11,
+          name: "Anoma Jayasinghe",
+          avatar: "https://i.pravatar.cc/150?img=11",
+          eventsParticipated: 9,
+          hoursContributed: 36,
+          points: 1950,
+          achievements: ["Recycling Champion"]
+        },
+        {
+          id: 12,
+          name: "Nuwan Rajakaruna",
+          avatar: "https://i.pravatar.cc/150?img=12",
+          eventsParticipated: 8,
+          hoursContributed: 32,
+          points: 1780,
+          achievements: ["Forest Guardian"]
+        },
+        {
+          id: 13,
+          name: "Samanthi Perera",
+          avatar: "https://i.pravatar.cc/150?img=13",
+          eventsParticipated: 7,
+          hoursContributed: 28,
+          points: 1630,
+          achievements: ["Youth Mentor"]
+        },
+        {
+          id: 14,
+          name: "Lasith Malinga",
+          avatar: "https://i.pravatar.cc/150?img=14",
+          eventsParticipated: 6,
+          hoursContributed: 24,
+          points: 1450,
+          achievements: ["Beach Cleaner"]
+        },
+        {
+          id: 15,
+          name: "Priyanka Bandara",
+          avatar: "https://i.pravatar.cc/150?img=15",
+          eventsParticipated: 5,
+          hoursContributed: 20,
+          points: 1280,
+          achievements: ["Nature Ambassador"]
+        }
+      ];
+
+      // Monthly leaderboard data
+      const monthlyLeaderboardData = [
+        {
+          id: 8,
+          name: "Rajitha De Silva",
+          avatar: "https://i.pravatar.cc/150?img=8",
+          eventsParticipated: 5,
+          hoursContributed: 20,
+          points: 980,
+          achievements: ["Plastic Fighter", "Ocean Friend"]
+        },
+        {
+          id: 3,
+          name: "Dinesha Silva",
+          avatar: "https://i.pravatar.cc/150?img=3",
+          eventsParticipated: 4,
+          hoursContributed: 16,
+          points: 890,
+          achievements: ["Forest Guardian", "Tree Planter"]
+        },
+        {
+          id: 12,
+          name: "Nuwan Rajakaruna",
+          avatar: "https://i.pravatar.cc/150?img=12",
+          eventsParticipated: 4,
+          hoursContributed: 16,
+          points: 850,
+          achievements: ["Forest Guardian"]
+        },
+        {
+          id: 5,
+          name: "Ishara Gunasekara",
+          avatar: "https://i.pravatar.cc/150?img=5",
+          eventsParticipated: 3,
+          hoursContributed: 12,
+          points: 720,
+          achievements: ["Beach Cleanup Pro", "Waste Warrior"]
+        },
+        {
+          id: 1,
+          name: "Sanjana Perera",
+          avatar: "https://i.pravatar.cc/150?img=1",
+          eventsParticipated: 3,
+          hoursContributed: 12,
+          points: 680,
+          achievements: ["Community Leader", "Environmental Educator"]
+        }
+      ];
+      
+      // Weekly leaderboard data
+      const weeklyLeaderboardData = [
+        {
+          id: 12,
+          name: "Nuwan Rajakaruna",
+          avatar: "https://i.pravatar.cc/150?img=12",
+          eventsParticipated: 2,
+          hoursContributed: 8,
+          points: 420,
+          achievements: ["Forest Guardian"]
+        },
+        {
+          id: 7,
+          name: "Kumari Bandara",
+          avatar: "https://i.pravatar.cc/150?img=7",
+          eventsParticipated: 2,
+          hoursContributed: 8,
+          points: 400,
+          achievements: ["River Guardian", "Waste Warrior"]
+        },
+        {
+          id: 8,
+          name: "Rajitha De Silva",
+          avatar: "https://i.pravatar.cc/150?img=8",
+          eventsParticipated: 2,
+          hoursContributed: 8,
+          points: 380,
+          achievements: ["Plastic Fighter", "Ocean Friend"]
+        },
+        {
+          id: 2,
+          name: "Asanka Fernando",
+          avatar: "https://i.pravatar.cc/150?img=2",
+          eventsParticipated: 1,
+          hoursContributed: 4,
+          points: 250,
+          achievements: ["Wildlife Protector", "Earth Defender"]
+        },
+        {
+          id: 14,
+          name: "Lasith Malinga",
+          avatar: "https://i.pravatar.cc/150?img=14",
+          eventsParticipated: 1,
+          hoursContributed: 4,
+          points: 230,
+          achievements: ["Beach Cleaner"]
+        }
+      ];
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Load the default leaderboard (all-time)
+        loadFullLeaderboard(fullLeaderboardData);
+        
+        // Set up tab switching
+        const tabs = document.querySelectorAll('.leaderboard-tab');
+        tabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Load appropriate data based on tab
+            const tabId = this.getAttribute('data-tab');
+            switch(tabId) {
+              case 'all-time':
+                loadFullLeaderboard(fullLeaderboardData);
+                break;
+              case 'monthly':
+                loadFullLeaderboard(monthlyLeaderboardData);
+                break;
+              case 'weekly':
+                loadFullLeaderboard(weeklyLeaderboardData);
+                break;
+            }
+          });
+        });
+      });
+
+      function loadFullLeaderboard(data) {
+        const leaderboardContainer = document.getElementById('fullLeaderboard');
+        if (!leaderboardContainer) return;
+        
+        // Clear container
+        leaderboardContainer.innerHTML = '';
+        
+        data.forEach((volunteer, index) => {
+          const row = document.createElement('div');
+          row.className = `leaderboard-row rank-${index + 1}`;
+          
+          // Special styling for top ranks
+          let rankDisplay = `<span>${index + 1}</span>`;
+          if (index === 0) {
+            rankDisplay = `<i class="fas fa-trophy" style="color: #fbbf24;"></i>`;
+          } else if (index === 1) {
+            rankDisplay = `<i class="fas fa-medal" style="color: #94a3b8;"></i>`;
+          } else if (index === 2) {
+            rankDisplay = `<i class="fas fa-medal" style="color: #b45309;"></i>`;
+          }
+          
+          // Add achievements if they exist
+          let achievementsHTML = '';
+          if (volunteer.achievements && volunteer.achievements.length > 0) {
+            achievementsHTML = `
+              <div class="user-achievements">
+                ${volunteer.achievements.map((achievement, i) => {
+                  let badgeClass = '';
+                  if (index === 0) badgeClass = 'badge-gold';
+                  else if (index === 1) badgeClass = 'badge-silver';
+                  else if (index === 2) badgeClass = 'badge-bronze';
+                  
+                  let icon = 'trophy';
+                  if (achievement.includes('Beach')) icon = 'water';
+                  else if (achievement.includes('Tree') || achievement.includes('Forest')) icon = 'tree';
+                  else if (achievement.includes('Community') || achievement.includes('Youth')) icon = 'users';
+                  else if (achievement.includes('River') || achievement.includes('Ocean') || achievement.includes('Water')) icon = 'water';
+                  else if (achievement.includes('Waste') || achievement.includes('Plastic') || achievement.includes('Recycling')) icon = 'recycle';
+                  else if (achievement.includes('Earth') || achievement.includes('Nature') || achievement.includes('Wildlife')) icon = 'globe';
+                  else if (achievement.includes('Education') || achievement.includes('Mentor')) icon = 'book';
+                  
+                  return `<span class="achievement-badge ${badgeClass}"><i class="fas fa-${icon}"></i>${achievement}</span>`;
+                }).join('')}
+              </div>
+            `;
+          }
+          
+          row.innerHTML = `
+            <div class="leaderboard-item">
+              <div class="leaderboard-rank">
+                ${rankDisplay}
+              </div>
+              <div class="leaderboard-avatar">
+                <img src="${volunteer.avatar}" alt="${volunteer.name}">
+              </div>
+              <div class="leaderboard-info">
+                <div class="leaderboard-name">${volunteer.name}</div>
+                <div class="leaderboard-stats">
+                  ${volunteer.eventsParticipated} events • ${volunteer.hoursContributed} hours
+                </div>
+              </div>
+              <div class="leaderboard-points">
+                <div class="points-value">${volunteer.points.toLocaleString()}</div>
+                <div class="points-label">points</div>
+              </div>
+            </div>
+            ${achievementsHTML}
+          `;
+          
+          leaderboardContainer.appendChild(row);
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Become a Sponsor - Pure Nation</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-content">
+        <a href="/" class="logo">
+          <i class="fas fa-leaf"></i>
+          <span>Pure Nation</span>
+        </a>
+        <div class="nav-links">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/events.html" class="nav-link">Events</a>
+          <a href="/leaderboard.html" class="nav-link">Leaderboard</a>
+          <a href="/sponsor.html" class="btn-primary">Become a Sponsor</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="sponsor-form-section">
+    <div class="container">
+      <h2>Become a Sponsor</h2>
+      <p>Fill out the form below to support our green mission!</p>
+      <form id="sponsorForm" class="sponsor-form">
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <input type="text" placeholder="Organization (optional)" />
+        <input type="tel" placeholder="Phone Number" />
+        <textarea placeholder="Why do you want to sponsor us?" rows="4" required></textarea>
+        <button type="submit" class="btn-primary">Submit</button>
+      </form>
+      <p id="formMessage" class="form-message"></p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <span id="currentYear"></span> Pure Nation. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Handle sponsor form submission
+    document.getElementById('sponsorForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('formMessage').textContent = 'Thank you for becoming a sponsor! We will contact you soon.';
+      this.reset();
+    });
+
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
