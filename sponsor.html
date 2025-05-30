@@ -28,14 +28,15 @@
     <div class="container">
       <h2>Become a Sponsor</h2>
       <p>Fill out the form below to support our green mission!</p>
-      <form id="sponsorForm" class="sponsor-form">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <input type="text" placeholder="Organization (optional)" />
-        <input type="tel" placeholder="Phone Number" />
-        <textarea placeholder="Why do you want to sponsor us?" rows="4" required></textarea>
-        <button type="submit" class="btn-primary">Submit</button>
-      </form>
+      <form action="http://localhost:5000/api/sponsor" method="post" class="sponsor-form">
+  <input type="text" name="name" placeholder="Your Name" required />
+  <input type="email" name="email" placeholder="Your Email" required />
+  <input type="text" name="organization" placeholder="Organization (optional)" />
+  <input type="tel" name="phone" placeholder="Phone Number" />
+  <textarea name="message" placeholder="Why do you want to sponsor us?" rows="4" required></textarea>
+  <button type="submit" class="btn-primary">Submit</button>
+</form>
+
       <p id="formMessage" class="form-message"></p>
     </div>
   </section>
