@@ -2,6 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const registerRoute = require('./routes/register');
+const sponsorRoute = require('./routes/sponsor');
+const contactRoute = require('./routes/contact');
+
+
+
 const cors = require('cors');
 
 dotenv.config();
@@ -19,6 +24,14 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Routes
 app.use('/api/register', registerRoute);
+// Routes
+const authRoutes = require('./routes/auth');
+app.use('/api/auth', authRoutes);
+// Routes
+app.use('/api/sponsor', sponsorRoute);
+app.use('/api/events', require('./routes/event'));
+app.use('/api/contact', require('./routes/contact'));
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
