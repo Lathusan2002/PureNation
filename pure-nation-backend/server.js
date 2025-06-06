@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const registerRoute = require('./routes/register');
 const sponsorRoute = require('./routes/sponsor');
-const contactRoute = require('./routes/contact');
 
 
 
@@ -21,7 +20,8 @@ mongoose.connect(process.env.MONGO_URI)
 
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error(err));
-
+//Routes
+app.use('/api/contact', require('./routes/contact'));
 // Routes
 app.use('/api/register', registerRoute);
 // Routes
@@ -30,7 +30,7 @@ app.use('/api/auth', authRoutes);
 // Routes
 app.use('/api/sponsor', sponsorRoute);
 app.use('/api/events', require('./routes/event'));
-app.use('/api/contact', require('./routes/contact'));
+
 
 
 const PORT = process.env.PORT || 5000;
