@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home - PureNation</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Load Header -->
+  <div id="header"></div>
+
+  <!-- Main Content -->
+  <main class="container">
+    <h1>Welcome to PureNation</h1>
+    <p>Together let's create a cleaner, greener Sri Lanka 🌿</p>
+
+    <div class="center">
+      <!-- Action Button: Get Involved / Profile -->
+      <a id="action-btn" class="btn-primary" href="get-involved.html">Get Involved</a>
+    </div>
+  </main>
+
+  <!-- Load Footer -->
+  <div id="footer"></div>
+
+  <!-- Script for dynamic header/footer and login status -->
+  <script>
+    // Inject header and footer
+    fetch("header.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("header").innerHTML = data);
+
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(data => document.getElementById("footer").innerHTML = data);
+
+    // Change action button if user is logged in
+    window.addEventListener("DOMContentLoaded", () => {
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      const actionBtn = document.getElementById("action-btn");
+      if (isLoggedIn && actionBtn) {
+        actionBtn.textContent = "Profile";
+        actionBtn.href = "profile.html";
+      }
+    });
+  </script>
+</body>
+</html>

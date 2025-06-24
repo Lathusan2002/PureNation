@@ -1,156 +1,238 @@
-<!-- File: register.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Register - PureNation</title>
+  <title>Register - Pure Nation</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      padding: 40px;
+    .register-page {
+      background-color: #f3f4f6;
+      padding: 4rem 0;
     }
-    .form-container {
+    .register-form {
       max-width: 900px;
       margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
     }
-    h2 {
+    .register-form h2 {
       text-align: center;
-      color: #0b3b75;
+      color: var(--primary);
+      margin-bottom: 1rem;
     }
     .form-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 15px;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
     .form-group {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
-    label {
+    .form-group label {
+      margin-bottom: 0.5rem;
       font-weight: bold;
-      margin-bottom: 5px;
+      color: #374151;
     }
-    input, select {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+    .form-group input,
+    .form-group select {
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      border: 1px solid #d1d5db;
     }
-    .optional {
+    .form-group .optional {
       font-weight: normal;
-      color: #007bff;
-      font-size: 0.9em;
+      font-size: 0.875rem;
+      color: #6b7280;
     }
     .error {
+      font-size: 0.8rem;
       color: red;
-      font-size: 0.8em;
+      margin-top: 0.25rem;
     }
-    button {
+    .btn-primary {
       width: 100%;
-      padding: 15px;
-      background: #007bff;
-      color: white;
-      font-size: 16px;
+      padding: 1rem;
+      font-size: 1rem;
       border: none;
-      border-radius: 8px;
+      border-radius: 0.5rem;
       cursor: pointer;
+      background-color: var(--primary);
+      color: white;
     }
-    button:hover {
-      background: #0056b3;
+    .btn-primary:hover {
+      background-color: var(--primaryDark);
     }
     .signin-link {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
     }
     .signin-link a {
-      color: #0b3b75;
-      text-decoration: none;
+      color: var(--primary);
       font-weight: bold;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <div class="form-container">
-    <h2>Join Our Team!</h2>
-    <div class="signin-link">
-      Already have an account? <a href="signin.html">Sign In here</a>
-    </div>
-    <form action="http://localhost:5000/api/register" method="post">
 
-      <div class="form-row">
-        <div class="form-group">
-          <label>First Name *</label>
-          <input type="text" name="firstName" required pattern="[A-Za-z]+" />
-          <span class="error">First Name should contain only letters.</span>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-content">
+        <a href="index.html" class="logo">
+          <i class="fas fa-leaf"></i><span>PureNation</span>
+        </a>
+        <div class="nav-links" id="navLinks" data-user="">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="events.html" class="nav-link">Events</a>
+          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+          <a class="nav-link" href="signin.html">
+            <button class="btn-primary">Get Involved</button>
+          </a>
         </div>
-        <div class="form-group">
-          <label>Last Name *</label>
-          <input type="text" name="lastName" required />
+        <button class="menu-toggle" id="menuToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Register Form Section -->
+  <section class="register-page">
+    <div class="container">
+      <form class="register-form" action="#" method="post">
+        <h2>Join Our Team!</h2>
+        <div class="signin-link">
+          Already have an account? <a href="signin.html">Sign In here</a>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" name="firstName" required pattern="[A-Za-z]+" />
+            <span class="error">First Name should contain only letters.</span>
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" name="lastName" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Company Name <span class="optional">(Optional)</span></label>
+            <input type="text" name="companyName" />
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" name="phoneNumber" required placeholder="071 234 5678" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label>Country</label>
+            <select name="country">
+              <option>Sri Lanka</option>
+              <option>India</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>District</label>
+            <select name="district">
+              <option>Select District</option>
+              <option>Colombo</option>
+              <option>Gampaha</option>
+              <option>Kandy</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>City</label>
+            <select name="city">
+              <option>Select City</option>
+              <option>Colombo</option>
+              <option>Negombo</option>
+              <option>Kandy</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Password *</label>
+            <input type="password" name="password" required />
+          </div>
+          <div class="form-group">
+            <label>Confirm Password *</label>
+            <input type="password" name="confirmPassword" required />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Register</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-info">
+          <a href="index.html" class="logo">
+            <i class="fas fa-leaf"></i><span>Pure Nation</span>
+          </a>
+          <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental awareness.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="get-involved.html">How to Volunteer</a></li>
+            <li><a href="sponsor.html">Sponsorship Opportunities</a></li>
+            <li><a href="#">Education Materials</a></li>
+            <li><a href="#">Waste Management Tips</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h3>Contact Us</h3>
+          <p>Have questions or suggestions? We'd love to hear from you.</p>
+          <form id="contactForm">
+            <input type="email" placeholder="Your email" required>
+            <textarea placeholder="Your message" rows="3" required></textarea>
+            <button type="submit" class="btn-primary">Send Message</button>
+          </form>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Company Name <span class="optional">(Optional)</span></label>
-          <input type="text" name="companyName" />
-        </div>
-        <div class="form-group">
-          <label>Phone Number *</label>
-          <input type="tel" name="phoneNumber" required placeholder="071 234 5678" />
-        </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="currentYear"></span> Pure Nation. All rights reserved.</p>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Email *</label>
-          <input type="email" name="email" required />
-        </div>
-        <div class="form-group">
-          <label>Country</label>
-          <select name="country">
-            <option>Sri Lanka</option>
-            <option>India</option>
-            <option>Other</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>District</label>
-          <select name="district">
-            <option>Select District</option>
-            <option>Colombo</option>
-            <option>Gampaha</option>
-            <option>Kandy</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>City</label>
-          <select name="city">
-            <option>Select City</option>
-            <option>Colombo</option>
-            <option>Negombo</option>
-            <option>Kandy</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Password *</label>
-          <input type="password" name="password" required />
-        </div>
-        <div class="form-group">
-          <label>Confirm Password *</label>
-          <input type="password" name="confirmPassword" required />
-        </div>
-      </div>
-      <button type="submit">Register</button>
-    </form>
-  </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+  </script>
+
 </body>
 </html>
