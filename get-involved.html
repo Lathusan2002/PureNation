@@ -1,73 +1,14 @@
+<!-- File: get-involved.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Become a Sponsor - Pure Nation</title>
+  <title>Get Involved - Pure Nation</title>
   <link rel="stylesheet" href="style.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <style>
-    .sponsor-form-section {
-      padding: 4rem 1rem;
-      background-color: #f9fafb;
-    }
-
-    .sponsor-form-section h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-      color: var(--primary, #0b3b75);
-    }
-
-    .sponsor-form-section p {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .sponsor-form {
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .sponsor-form input,
-    .sponsor-form textarea {
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 0.5rem;
-      font-size: 1rem;
-    }
-
-    .sponsor-form button {
-      background-color: var(--primary, #007bff);
-      color: white;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-
-    .sponsor-form button:hover {
-      background-color: var(--primaryDark, #0056b3);
-    }
-
-    .form-message {
-      margin-top: 1rem;
-      text-align: center;
-      font-weight: bold;
-      color: green;
-    }
-  </style>
+  <script src="https://kit.fontawesome.com/a2e0e6ad79.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
   <!-- Header -->
   <nav class="navbar">
     <div class="container">
@@ -90,20 +31,35 @@
     </div>
   </nav>
 
-  <!-- Sponsor Form Section -->
-  <section class="sponsor-form-section">
+  <!-- Main Content -->
+  <section class="hero-section">
     <div class="container">
-      <h2>Become a Sponsor</h2>
-      <p>Fill out the form below to support our green mission!</p>
-      <form id="sponsorForm" class="sponsor-form">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <input type="text" placeholder="Organization (optional)" />
-        <input type="tel" placeholder="Phone Number" />
-        <textarea placeholder="Why do you want to sponsor us?" rows="4" required></textarea>
-        <button type="submit" class="btn-primary">Submit</button>
-      </form>
-      <p id="formMessage" class="form-message"></p>
+      <h1>Make a Difference with Pure Nation</h1>
+      <p>Join hands with us to build a cleaner, greener Sri Lanka. Whether you're a volunteer, sponsor, or advocate, your contribution matters!</p>
+      <a href="register.html" class="btn-primary">Become a Volunteer</a>
+    </div>
+  </section>
+
+  <section class="get-involved-options container">
+    <div class="card-grid">
+      <div class="card">
+        <i class="fas fa-hands-helping fa-3x"></i>
+        <h3>Volunteer</h3>
+        <p>Participate in cleanups, awareness drives, and other sustainability efforts. Every small act counts.</p>
+        <a href="events.html" class="btn-secondary">Find Events</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-hand-holding-heart fa-3x"></i>
+        <h3>Sponsor</h3>
+        <p>Support our initiatives by sponsoring campaigns or providing materials for local events.</p>
+        <a href="sponsor.html" class="btn-secondary">Become a Sponsor</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-bullhorn fa-3x"></i>
+        <h3>Spread the Word</h3>
+        <p>Share our message on social media, in your communities, or organize awareness sessions.</p>
+        <a href="#" class="btn-secondary">Get Resources</a>
+      </div>
     </div>
   </section>
 
@@ -149,15 +105,7 @@
   </footer>
 
   <script>
-    // Handle sponsor form submission
-    document.getElementById('sponsorForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      document.getElementById('formMessage').textContent = 'Thank you for becoming a sponsor! We will contact you soon.';
-      this.reset();
-    });
-
-    // Set current year in footer
-    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>

@@ -59,11 +59,11 @@ const eventData = [
   {
     id: 1,
     title: "Colombo Beach Cleanup",
-    date: "2023-06-15",
+    date: "2025-06-15",
     time: "9:00 AM",
     location: "Mount Lavinia Beach",
     description: "Join us for a community cleanup at one of Colombo's most popular beaches. Help remove plastic waste and learn about marine conservation.",
-    image: "C:\Users\USER\OneDrive\Desktop\Hi\ColomboBeachCleanup.jpg",
+    image: "./ColomboBeachCleanup.jpg",
     status: "active",
     tags: ["Beach", "Plastic", "Community"],
     volunteersJoined: 45,
@@ -73,11 +73,11 @@ const eventData = [
   {
     id: 2,
     title: "Kandy Forest Restoration",
-    date: "2023-06-22",
+    date: "2025-05-22",
     time: "8:30 AM",
     location: "Galle",
     description: "Help us plant native trees and restore the forest ecosystem in this ancient sanctuary. Equipment and saplings will be provided.",
-    image: "./a.avif",
+    image: "./KandyForestRestoration.jpg",
     status: "Completed",
     tags: ["Forest", "Planting", "Conservation"],
     volunteersJoined: 28,
@@ -87,11 +87,11 @@ const eventData = [
   {
     id: 3,
     title: "Galle River Cleanup",
-    date: "2023-06-29",
+    date: "2025-06-14",
     time: "7:00 AM",
     location: "Colombo",
     description: "Help us remove trash and pollutants from this important river ecosystem that serves many local communities.",
-    image: "https://source.unsplash.com/random/800x600/?river,cleanup",
+   image: "./GalleRiverCleanup.jpg",
     status: "active",
     tags: ["River", "Plastic", "Water"],
     volunteersJoined: 35,
@@ -101,15 +101,16 @@ const eventData = [
   {
     id: 4,
     title: "Negombo Street Cleanup",
-    date: "2023-07-05",
+    date: "2025-06-20",
     time: "9:00 AM",
     location: "Negombo Town Center",
     description: "Join our community initiative to clean up the streets of Negombo and raise awareness about proper waste disposal.",
-    image: "https://source.unsplash.com/random/800x600/?street,cleanup",
+    image: "./NegomboStreetCleanup.jpg",
     status: "active",
     tags: ["Urban", "Community", "Education"],
     volunteersJoined: 18,
-    volunteersNeeded: 30
+    volunteersNeeded: 30,
+    sponsor: "Clean Nature"
   }
 ];
 

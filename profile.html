@@ -3,66 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Become a Sponsor - Pure Nation</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <title>User Profile - Pure Nation</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    .sponsor-form-section {
-      padding: 4rem 1rem;
-      background-color: #f9fafb;
-    }
-
-    .sponsor-form-section h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-      color: var(--primary, #0b3b75);
-    }
-
-    .sponsor-form-section p {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .sponsor-form {
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    .profile-section {
+      background-color: #f8f9fa;
+      padding: 50px 20px;
       display: flex;
+      justify-content: center;
+      align-items: center;
       flex-direction: column;
-      gap: 1rem;
     }
 
-    .sponsor-form input,
-    .sponsor-form textarea {
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 0.5rem;
+    .profile-card {
+      background: #fff;
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .profile-card p {
+      margin: 12px 0;
       font-size: 1rem;
     }
 
-    .sponsor-form button {
-      background-color: var(--primary, #007bff);
-      color: white;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-
-    .sponsor-form button:hover {
-      background-color: var(--primaryDark, #0056b3);
-    }
-
-    .form-message {
-      margin-top: 1rem;
-      text-align: center;
-      font-weight: bold;
-      color: green;
+    .profile-card button {
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -75,13 +45,11 @@
         <a href="index.html" class="logo">
           <i class="fas fa-leaf"></i><span>PureNation</span>
         </a>
-        <div class="nav-links" id="navLinks" data-user="">
+        <div class="nav-links" id="navLinks">
           <a href="index.html" class="nav-link">Home</a>
           <a href="events.html" class="nav-link">Events</a>
           <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a class="nav-link" href="signin.html">
-            <button class="btn-primary">Get Involved</button>
-          </a>
+          <a href="signin.html" class="nav-link"><button class="btn-primary">Get Involved</button></a>
         </div>
         <button class="menu-toggle" id="menuToggle">
           <i class="fas fa-bars"></i>
@@ -90,20 +58,17 @@
     </div>
   </nav>
 
-  <!-- Sponsor Form Section -->
-  <section class="sponsor-form-section">
-    <div class="container">
-      <h2>Become a Sponsor</h2>
-      <p>Fill out the form below to support our green mission!</p>
-      <form id="sponsorForm" class="sponsor-form">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <input type="text" placeholder="Organization (optional)" />
-        <input type="tel" placeholder="Phone Number" />
-        <textarea placeholder="Why do you want to sponsor us?" rows="4" required></textarea>
-        <button type="submit" class="btn-primary">Submit</button>
-      </form>
-      <p id="formMessage" class="form-message"></p>
+  <!-- Profile Content -->
+  <section class="profile-section">
+    <h2>Your Profile</h2>
+    <div class="profile-card">
+      <p><strong>Name:</strong> John Doe</p>
+      <p><strong>Email:</strong> johndoe@example.com</p>
+      <p><strong>District:</strong> Colombo</p>
+      <p><strong>City:</strong> Nugegoda</p>
+      <p><strong>Total Volunteer Hours:</strong> 36</p>
+      <p><strong>Events Participated:</strong> 4</p>
+      <button class="btn-primary" onclick="window.location.href='submit-proof.html'">Submit Proof of Activity</button>
     </div>
   </section>
 
@@ -149,15 +114,8 @@
   </footer>
 
   <script>
-    // Handle sponsor form submission
-    document.getElementById('sponsorForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      document.getElementById('formMessage').textContent = 'Thank you for becoming a sponsor! We will contact you soon.';
-      this.reset();
-    });
-
-    // Set current year in footer
     document.getElementById('currentYear').textContent = new Date().getFullYear();
   </script>
+
 </body>
 </html>

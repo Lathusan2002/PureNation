@@ -3,66 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Become a Sponsor - Pure Nation</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <title>Submit Proof - Pure Nation</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    .sponsor-form-section {
-      padding: 4rem 1rem;
-      background-color: #f9fafb;
-    }
-
-    .sponsor-form-section h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-      color: var(--primary, #0b3b75);
-    }
-
-    .sponsor-form-section p {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .sponsor-form {
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    .proof-section {
+      padding: 50px 20px;
+      background: #f2f2f2;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      align-items: center;
     }
 
-    .sponsor-form input,
-    .sponsor-form textarea {
-      padding: 0.75rem;
+    .proof-form {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .proof-form label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+    }
+
+    .proof-form input,
+    .proof-form textarea,
+    .proof-form select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
       border: 1px solid #ccc;
-      border-radius: 0.5rem;
-      font-size: 1rem;
     }
 
-    .sponsor-form button {
-      background-color: var(--primary, #007bff);
-      color: white;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
+    .proof-form button {
+      margin-top: 20px;
     }
 
-    .sponsor-form button:hover {
-      background-color: var(--primaryDark, #0056b3);
-    }
-
-    .form-message {
-      margin-top: 1rem;
-      text-align: center;
-      font-weight: bold;
+    .success-message {
       color: green;
+      margin-top: 15px;
+      text-align: center;
     }
   </style>
 </head>
@@ -75,13 +60,11 @@
         <a href="index.html" class="logo">
           <i class="fas fa-leaf"></i><span>PureNation</span>
         </a>
-        <div class="nav-links" id="navLinks" data-user="">
+        <div class="nav-links" id="navLinks">
           <a href="index.html" class="nav-link">Home</a>
           <a href="events.html" class="nav-link">Events</a>
           <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a class="nav-link" href="signin.html">
-            <button class="btn-primary">Get Involved</button>
-          </a>
+          <a href="signin.html" class="nav-link"><button class="btn-primary">Get Involved</button></a>
         </div>
         <button class="menu-toggle" id="menuToggle">
           <i class="fas fa-bars"></i>
@@ -90,21 +73,25 @@
     </div>
   </nav>
 
-  <!-- Sponsor Form Section -->
-  <section class="sponsor-form-section">
-    <div class="container">
-      <h2>Become a Sponsor</h2>
-      <p>Fill out the form below to support our green mission!</p>
-      <form id="sponsorForm" class="sponsor-form">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <input type="text" placeholder="Organization (optional)" />
-        <input type="tel" placeholder="Phone Number" />
-        <textarea placeholder="Why do you want to sponsor us?" rows="4" required></textarea>
-        <button type="submit" class="btn-primary">Submit</button>
-      </form>
-      <p id="formMessage" class="form-message"></p>
-    </div>
+  <!-- Proof Submission Section -->
+  <section class="proof-section">
+    <h2>Submit Your Volunteer Proof</h2>
+    <form class="proof-form" id="proofForm">
+      <label for="event">Event Name</label>
+      <input type="text" id="event" name="event" required>
+
+      <label for="hours">Number of Hours Contributed</label>
+      <input type="number" id="hours" name="hours" required min="1">
+
+      <label for="file">Upload Image/Proof (jpg, png, pdf)</label>
+      <input type="file" id="file" name="file" accept="image/*,application/pdf" required>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4" placeholder="What did you do during the event?" required></textarea>
+
+      <button type="submit" class="btn-primary">Submit Proof</button>
+      <div class="success-message" id="successMessage"></div>
+    </form>
   </section>
 
   <!-- Footer -->
@@ -149,15 +136,14 @@
   </footer>
 
   <script>
-    // Handle sponsor form submission
-    document.getElementById('sponsorForm').addEventListener('submit', function(e) {
+    document.getElementById('proofForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      document.getElementById('formMessage').textContent = 'Thank you for becoming a sponsor! We will contact you soon.';
+      document.getElementById('successMessage').textContent = "Thank you! Your proof has been submitted.";
       this.reset();
     });
 
-    // Set current year in footer
     document.getElementById('currentYear').textContent = new Date().getFullYear();
   </script>
+
 </body>
 </html>

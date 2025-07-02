@@ -62,7 +62,6 @@
     </style>
   </head>
   <body>
-    
     <!-- Navbar - same as index.html -->
     <nav class="navbar">
       <div class="container">
@@ -170,14 +169,12 @@
           </div>
           <div class="footer-contact">
             <h3>Contact Us</h3>
-           <p>Have questions or suggestions? We'd love to hear from you.</p>
-            <form id="contactForm" method="post" action="http://localhost:5000/api/contact">
-  <input type="email" name="email" placeholder="Your email" required />
-  <textarea name="message" placeholder="Your message" rows="3" required></textarea>
-  <button type="submit" class="btn-primary">Send Message</button>
-</form>
-
-
+            <p>Have questions or suggestions? We'd love to hear from you.</p>
+            <form id="contactForm">
+              <input type="email" placeholder="Your email" required>
+              <textarea placeholder="Your message" rows="3" required></textarea>
+              <button type="submit" class="btn-primary">Send Message</button>
+            </form>
           </div>
         </div>
         <div class="footer-bottom">
@@ -190,63 +187,64 @@
     <script>
       // Additional data for events page
       const allEventsData = [
-        ...eventData,
-        {
-          id: 5,
-          title: "Sigiriya Area Restoration",
-          date: "2023-07-12",
-          time: "8:00 AM",
-          location: "Sigiriya",
-          description: "Help us clean the surrounding areas of this historic site and preserve its natural beauty.",
-          image: "https://source.unsplash.com/random/800x600/?sigiriya,landscape",
-          status: "active",
-          tags: ["Historical", "Tourism", "Conservation"],
-          volunteersJoined: 22,
-          volunteersNeeded: 40,
-          sponsor: "Heritage Conservation Trust"
-        },
-        {
-          id: 6,
-          title: "Trincomalee Beach Cleanup",
-          date: "2023-07-18",
-          time: "7:30 AM",
-          location: "Trincomalee",
-          description: "Join us at one of Sri Lanka's most beautiful beaches to remove plastic waste and debris.",
-          image: "https://source.unsplash.com/random/800x600/?beach,trincomalee",
-          status: "active",
-          tags: ["Beach", "Plastic", "Marine"],
-          volunteersJoined: 15,
-          volunteersNeeded: 35,
-          sponsor: "Ocean Savers"
-        },
-        {
-          id: 7,
-          title: "Nuwara Eliya Park Renewal",
-          date: "2023-06-10",
-          time: "9:00 AM",
-          location: "Nuwara Eliya",
-          description: "Help us clean and renew Victoria Park, one of the most visited attractions in Nuwara Eliya.",
-          image: "https://source.unsplash.com/random/800x600/?park,garden",
-          status: "completed",
-          tags: ["Park", "Urban", "Tourism"],
-          volunteersJoined: 40,
-          volunteersNeeded: 40,
-          sponsor: "City Beautification Committee"
-        },
-        {
-          id: 8,
-          title: "Batticaloa Lagoon Cleanup",
-          date: "2023-07-25",
-          time: "8:00 AM",
-          location: "Batticaloa",
-          description: "Join our efforts to clean up the Batticaloa Lagoon and protect this vital ecosystem.",
-          image: "https://source.unsplash.com/random/800x600/?lagoon,water",
-          status: "active",
-          tags: ["Lagoon", "Water", "Ecosystem"],
-          volunteersJoined: 12,
-          volunteersNeeded: 30
-        }
-      ];
+  {
+    id: 1,
+    title: "Colombo Coastal Clean-Up",
+    date: "2025-07-05",
+    time: "9:00 AM",
+    location: "Colombo",
+    description: "A coastal sweep of marine debris and plastic waste in Wellawatte Beach.",
+    image: "./ColomboCoastalCleanup.jpg",
+    status: "active",
+    tags: ["Beach", "Urban", "Plastic"],
+    volunteersJoined: 18,
+    volunteersNeeded: 30,
+    sponsor: "Clean Oceans SL"
+  },
+  {
+    id: 2,
+    title: "Kandy Lake Beautification",
+    date: "2025-07-10",
+    time: "10:00 AM",
+    location: "Kandy",
+    description: "Join us in cleaning Kandy Lake surroundings and planting greenery.",
+    image: "./KandyLakeCleanup.jpg",
+    status: "active",
+    tags: ["Lake", "Urban", "Green"],
+    volunteersJoined: 24,
+    volunteersNeeded: 40,
+    sponsor: "Kandy Green Circle"
+  },
+  {
+    id: 3,
+    title: "Negombo Wetlands Cleanup",
+    date: "2025-06-29",
+    time: "8:30 AM",
+    location: "Negombo",
+    description: "Help restore the wetland ecosystem with this morning cleanup drive.",
+    image: "./NegomboWetlands.jpg",
+    status: "completed",
+    tags: ["Wetland", "Water", "Ecosystem"],
+    volunteersJoined: 30,
+    volunteersNeeded: 30,
+    sponsor: "Eco Warriors SL"
+  },
+  {
+    id: 4,
+    title: "Galle Fort Area Waste Sweep",
+    date: "2025-07-02",
+    time: "7:00 AM",
+    location: "Galle",
+    description: "Volunteer to clean around Galle Fort’s heritage zones and pathways.",
+    image: "./GalleFortWasteSweep.jpg",
+    status: "active",
+    tags: ["Urban", "Tourism", "Plastic"],
+    volunteersJoined: 20,
+    volunteersNeeded: 35,
+    sponsor: "Tourism Board SL"
+  }
+];
+
 
       document.addEventListener('DOMContentLoaded', function() {
         // Load all events
