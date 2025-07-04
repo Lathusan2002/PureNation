@@ -1,238 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pure Nation - Sri Lanka Green Up</title>
-    <meta
-      name="description"
-      content="Working together to create a cleaner, greener Sri Lanka"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-  </head>
-  <body>
-    <!-- Load Header -->
-    <div id="header"></div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-overlay"></div>
-      <div class="container">
-        <div class="hero-content">
-          <h1>Let's Make Sri Lanka Clean, Green and Beautiful Together</h1>
-          <p>
-            Join our movement to create a cleaner environment through community
-            action and volunteer projects across Sri Lanka.
-          </p>
-          <div class="hero-buttons">
-            <a href="/events.html" class="btn-primary">Join a Cleanup</a>
-            <a href="/sponsor.html" class="btn-outline">Become a Sponsor</a>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pure Nation - Sri Lanka Green Up</title>
+  <meta name="description" content="Working together to create a cleaner, greener Sri Lanka" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+  <!-- Load Header -->
+  <div id="header"></div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <h1>Let's Make Sri Lanka Clean, Green and Beautiful Together</h1>
+        <p>Join our movement to create a cleaner environment through community action and volunteer projects across Sri
+          Lanka.</p>
+        <div class="hero-buttons">
+          <a href="/events.html" class="btn-primary">Join a Cleanup</a>
+          <a href="/sponsor.html" class="btn-outline">Become a Sponsor</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Mission Statement -->
-    <section class="mission">
-      <div class="container">
-        <div class="section-header">
-          <h2>Our Mission</h2>
-          <p>
-            Pure Nation is dedicated to making Sri Lanka cleaner, greener, and
-            more beautiful through community action and environmental awareness.
-          </p>
+  <!-- Featured Events -->
+  <section class="featured-events">
+    <div class="container">
+      <div class="section-header-with-link">
+        <div>
+          <h2>Featured Cleanup Events</h2>
+          <p>Join these upcoming events and make a difference in your community</p>
         </div>
-        <div class="mission-grid">
-          <div class="mission-item">
-            <div class="icon-circle">
-              <i class="fas fa-leaf"></i>
-            </div>
-            <h3>Clean Environment</h3>
-            <p>
-              We organize community cleanup events across Sri Lanka to reduce
-              pollution and improve our environment.
-            </p>
-          </div>
-          <div class="mission-item">
-            <div class="icon-circle icon-shield">
-              <i class="fas fa-shield-alt"></i>
-            </div>
-            <h3>Environmental Education</h3>
-            <p>
-              We raise awareness about environmental issues and promote
-              sustainable waste management practices.
-            </p>
-          </div>
-          <div class="mission-item">
-            <div class="icon-circle icon-award">
-              <i class="fas fa-award"></i>
-            </div>
-            <h3>Volunteer Recognition</h3>
-            <p>
-              We acknowledge and reward volunteers who contribute their time and
-              effort to environmental causes.
-            </p>
-          </div>
-          <div class="mission-item">
-            <div class="icon-circle icon-users">
-              <i class="fas fa-users"></i>
-            </div>
-            <h3>Community Building</h3>
-            <p>
-              We foster a community of environmentally conscious citizens
-              working together for a better Sri Lanka.
-            </p>
-          </div>
+        <a href="/events.html" class="view-all">View all events <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="events-grid" id="featuredEvents"></div>
+    </div>
+  </section>
+
+  <!-- Leaderboard Section -->
+  <section class="leaderboard">
+    <div class="container">
+      <div class="section-header">
+        <h2>Top Volunteers</h2>
+        <p>Recognizing the dedication and hard work of our most active volunteers</p>
+      </div>
+      <div class="leaderboard-container">
+        <div class="leaderboard-list" id="leaderboardList"></div>
+        <div class="text-center">
+          <a href="/leaderboard.html" class="btn-outline">View Full Leaderboard</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
-      <div class="container">
-        <div class="section-header">
-          <h2>Our Impact So Far</h2>
-          <p>
-            Together, we've made significant progress in making Sri Lanka
-            cleaner and more beautiful
-          </p>
-        </div>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-icon">
-              <i class="fas fa-trash"></i>
-            </div>
-            <div class="stat-number">15,000+</div>
-            <p>Kilograms of Waste Collected</p>
-          </div>
-          <div class="stat-item">
-            <div class="stat-icon">
-              <i class="fas fa-map-marker-alt"></i>
-            </div>
-            <div class="stat-number">50+</div>
-            <p>Locations Cleaned</p>
-          </div>
-          <div class="stat-item">
-            <div class="stat-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <div class="stat-number">1,250+</div>
-            <p>Active Volunteers</p>
-          </div>
-          <div class="stat-item">
-            <div class="stat-icon">
-              <i class="fas fa-calendar"></i>
-            </div>
-            <div class="stat-number">150+</div>
-            <p>Clean-up Events</p>
-          </div>
-        </div>
-      </div>
-    </section>
+  <!-- Footer -->
+  <div id="footer"></div>
 
-    <!-- Featured Events -->
-    <section class="featured-events">
-      <div class="container">
-        <div class="section-header-with-link">
-          <div>
-            <h2>Featured Cleanup Events</h2>
-            <p>
-              Join these upcoming events and make a difference in your community
-            </p>
-          </div>
-          <a href="/events.html" class="view-all"
-            >View all events <i class="fas fa-arrow-right"></i
-          ></a>
-        </div>
-        <div class="events-grid" id="featuredEvents">
-          <!-- Event cards will be loaded by JavaScript -->
-        </div>
-      </div>
-    </section>
+  <!-- Scripts -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Load header and initialize everything that depends on it
+      fetch("header.html").then(res => res.text()).then(html => {
+        document.getElementById("header").innerHTML = html;
 
-    <!-- Leaderboard Section -->
-    <section class="leaderboard">
-      <div class="container">
-        <div class="section-header">
-          <h2>Top Volunteers</h2>
-          <p>
-            Recognizing the dedication and hard work of our most active
-            volunteers
-          </p>
-        </div>
-        <div class="leaderboard-container">
-          <div class="leaderboard-list" id="leaderboardList">
-            <!-- Leaderboard items will be loaded by JavaScript -->
-          </div>
-          <div class="text-center">
-            <a href="/leaderboard.html" class="btn-outline"
-              >View Full Leaderboard</a
-            >
-          </div>
-        </div>
-      </div>
-    </section>
+        const navLinks = document.getElementById("navLinks");
+        if (navLinks) {
+          const adminBtn = document.createElement("button");
+          adminBtn.id = "adminBtn";
+          adminBtn.className = "btn-secondary";
+          adminBtn.textContent = "Admin Panel";
+          adminBtn.style.marginLeft = "1rem";
+          navLinks.appendChild(adminBtn);
+        }
 
-    <!-- Call to Action -->
-    <section class="cta">
-      <div class="container">
-        <div class="cta-card">
-          <div class="cta-content">
-            <div class="cta-text">
-              <h2>Ready to Make a Difference?</h2>
-              <p>
-                Join our growing community of volunteers and sponsors who are
-                working together to create a cleaner, greener Sri Lanka. Every
-                action counts!
-              </p>
-              <div class="cta-buttons">
-                <a href="/events.html" class="btn-primary">Join as Volunteer</a>
-                <a href="/sponsor.html" class="btn-secondary"
-                  >Become a Sponsor</a
-                >
+        // Initialize admin button
+        const adminBtn = document.getElementById('adminBtn');
+        if (adminBtn) {
+          adminBtn.addEventListener('click', async () => {
+            const username = prompt("Enter Admin Username:");
+            if (!username) return;
+
+            const password = prompt("Enter Admin Password:");
+            if (!password) return;
+
+            try {
+              const response = await fetch('http://localhost:5000/api/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+              });
+
+              const result = await response.json();
+              if (response.ok && result.success) {
+                alert('Admin login successful!');
+                window.location.href = 'admin-dashboard.html';
+              } else {
+                alert(result.message || 'Invalid credentials');
+              }
+            } catch (error) {
+              console.error(error);
+              alert('Error connecting to the server.');
+            }
+          });
+        }
+
+        // Update Auth Section
+        const authSection = document.getElementById('auth-section');
+        const userId = localStorage.getItem('userId');
+        const userName = localStorage.getItem('userName');
+
+        if (authSection) {
+          if (userId && userName) {
+            authSection.innerHTML = `
+              <a href="profile.html" class="nav-link">My Profile</a>
+              <a href="#" class="nav-link" onclick="logout()" style="color: red;">Logout</a>
+            `;
+          } else {
+            authSection.innerHTML = `
+              <a href="signin.html" class="nav-link">Sign In</a>
+              <a href="register.html" class="nav-link">
+                <button class="btn-primary">Get Involved</button>
+              </a>
+            `;
+          }
+        }
+      });
+
+      // Load footer
+      fetch("footer.html").then(res => res.text()).then(html => {
+        document.getElementById("footer").innerHTML = html;
+        const year = new Date().getFullYear();
+        if (document.getElementById("currentYear")) {
+          document.getElementById("currentYear").textContent = year;
+        }
+      });
+
+      // Load Featured Events
+      fetch("http://localhost:5000/api/events")
+        .then(res => res.json())
+        .then(events => {
+          const container = document.getElementById("featuredEvents");
+          if (!Array.isArray(events) || events.length === 0) {
+            container.innerHTML = "<p>No featured events available.</p>";
+            return;
+          }
+
+          container.innerHTML = events.map(event => {
+            const percent = (event.approvedParticipants || 0) / (event.maxParticipants || 30) * 100;
+            const date = new Date(event.date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric'
+            });
+
+            return `
+              <div class="event-card">
+                <div class="event-image">
+                  <img src="${event.coverImage ? 'http://localhost:5000' + event.coverImage : './default-event.jpg'}" alt="${event.title}">
+                  <div class="event-status status-active">Active</div>
+                </div>
+                <div class="event-content">
+                  <div class="event-tags">
+                    <span class="event-tag">${event.location}</span>
+                    <span class="event-tag">${event.type}</span>
+                  </div>
+                  <h3 class="event-title">${event.title}</h3>
+                  <div class="event-meta"><i class="fas fa-calendar"></i> ${date}</div>
+                  <div class="event-meta"><i class="fas fa-map-marker-alt"></i> ${event.location}</div>
+                  <p class="event-description">${event.description}</p>
+                  <div class="volunteer-progress">
+                    <div class="progress-header">
+                      <span><i class="fas fa-users"></i> Volunteers</span>
+                      <span>${event.participants?.length || 0}/${event.maxParticipants || 30}</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: ${percent}%"></div>
+                    </div>
+                  </div>
+                  <a href="/event-details.html?id=${event._id}" class="btn-primary" style="width:100%; text-align:center;">Join Cleanup</a>
+                </div>
               </div>
-            </div>
-            <div class="cta-stats">
-              <div class="cta-stat">
-                <div class="cta-stat-number">1,250+</div>
-                <div class="cta-stat-label">Volunteers</div>
-              </div>
-              <div class="cta-stat">
-                <div class="cta-stat-number">150+</div>
-                <div class="cta-stat-label">Clean-up Events</div>
-              </div>
-              <div class="cta-stat">
-                <div class="cta-stat-number">75+</div>
-                <div class="cta-stat-label">Sponsors</div>
-              </div>
-              <div class="cta-stat">
-                <div class="cta-stat-number">25+</div>
-                <div class="cta-stat-label">Locations</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+            `;
+          }).join('');
+        })
+        .catch(err => {
+          console.error("Error loading featured events:", err);
+          document.getElementById("featuredEvents").innerHTML = "<p>Failed to load featured events.</p>";
+        });
 
-<!-- Load Footer -->
-    <div id="footer"></div>
+      // Load Leaderboard
+      fetch("http://localhost:5000/api/leaderboard")
+        .then(res => res.json())
+        .then(volunteers => {
+          const container = document.getElementById("leaderboardList");
+          if (!Array.isArray(volunteers) || volunteers.length === 0) {
+            container.innerHTML = "<p>No top volunteers found.</p>";
+            return;
+          }
 
-    <!-- Scripts -->
-    <script src="script.js"></script>
-    <script>
-      // Dynamically inject header and footer from external HTML files
-      fetch("header.html")
-        .then((res) => res.text())
-        .then((data) => (document.getElementById("header").innerHTML = data));
+          container.innerHTML = volunteers.map((user, i) => {
+            const profileImg = user.profilePicture
+              ? `http://localhost:5000${user.profilePicture}`
+              : `https://i.pravatar.cc/40?u=${user.id}`;
 
-      fetch("footer.html")
-        .then((res) => res.text())
-        .then((data) => (document.getElementById("footer").innerHTML = data));
-    </script>
-  </body>
+            return `
+              <div class="leaderboard-item" style="display: flex; align-items: center; margin-bottom: 8px;">
+                <span class="rank" style="width: 24px; font-weight: bold;">${i + 1}</span>
+                <img src="${profileImg}" alt="${user.name}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; margin: 0 8px;">
+                <span class="name">${user.name}</span>
+              </div>
+            `;
+          }).join('');
+        });
+    });
+
+    function logout() {
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userName');
+      alert('Logged out successfully.');
+      window.location.href = 'index.html';
+    }
+  </script>
+
+</body>
+
 </html>

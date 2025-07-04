@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Profile - Pure Nation</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     .profile-section {
       background-color: #f8f9fa;
@@ -21,7 +21,7 @@
       padding: 30px;
       max-width: 500px;
       width: 100%;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
       text-align: left;
     }
@@ -36,6 +36,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- Header -->
@@ -49,7 +50,7 @@
           <a href="index.html" class="nav-link">Home</a>
           <a href="events.html" class="nav-link">Events</a>
           <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a href="signin.html" class="nav-link"><button class="btn-primary">Get Involved</button></a>
+          <span id="auth-section"></span>
         </div>
         <button class="menu-toggle" id="menuToggle">
           <i class="fas fa-bars"></i>
@@ -61,14 +62,8 @@
   <!-- Profile Content -->
   <section class="profile-section">
     <h2>Your Profile</h2>
-    <div class="profile-card">
-      <p><strong>Name:</strong> John Doe</p>
-      <p><strong>Email:</strong> johndoe@example.com</p>
-      <p><strong>District:</strong> Colombo</p>
-      <p><strong>City:</strong> Nugegoda</p>
-      <p><strong>Total Volunteer Hours:</strong> 36</p>
-      <p><strong>Events Participated:</strong> 4</p>
-      <button class="btn-primary" onclick="window.location.href='submit-proof.html'">Submit Proof of Activity</button>
+    <div class="profile-card" id="profileCard">
+      <p>Loading your profile...</p>
     </div>
   </section>
 
@@ -80,7 +75,8 @@
           <a href="index.html" class="logo">
             <i class="fas fa-leaf"></i><span>Pure Nation</span>
           </a>
-          <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental awareness.</p>
+          <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental
+            awareness.</p>
           <div class="social-links">
             <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
@@ -113,9 +109,72 @@
     </div>
   </footer>
 
+  <!-- Scripts -->
   <script>
     document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Show auth buttons
+    document.addEventListener('DOMContentLoaded', () => {
+      const authSection = document.getElementById('auth-section');
+      const userId = localStorage.getItem('userId');
+      const userName = localStorage.getItem('userName');
+
+      if (authSection) {
+        if (userId) {
+          authSection.innerHTML = `
+          <a href="profile.html" class="nav-link">Profile</a>
+          <a href="#" class="nav-link" onclick="logout()" style="color: red;">Log Out</a>
+        `;
+        } else {
+          authSection.innerHTML = `
+          <a href="signin.html" class="nav-link">Sign In</a>
+          <a href="register.html" class="nav-link"><button class="btn-primary">Get Involved</button></a>
+        `;
+        }
+      }
+    });
+
+    // Load user profile
+    document.addEventListener('DOMContentLoaded', async () => {
+      const profileCard = document.getElementById('profileCard');
+      const userId = localStorage.getItem('userId');
+
+      if (!userId) {
+        profileCard.innerHTML = `<p>Please sign in to view your profile.</p>`;
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:5000/api/user/profile?userId=${userId}`);
+        const data = await res.json();
+
+        if (!res.ok || !data.name) {
+          throw new Error(data.message || 'Could not load profile');
+        }
+
+        profileCard.innerHTML = `
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>District:</strong> ${data.district}</p>
+        <p><strong>City:</strong> ${data.city}</p>
+        <p><strong>Total Volunteer Hours:</strong> ${data.volunteerHours}</p>
+        <p><strong>Events Participated:</strong> ${data.eventsParticipated}</p>
+        <button class="btn-primary" onclick="window.location.href='submit-proof.html'">Submit Proof of Activity</button>
+      `;
+      } catch (err) {
+        console.error(err);
+        profileCard.innerHTML = `<p>Error: ${err.message}</p>`;
+      }
+    });
+
+    function logout() {
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userName');
+      alert('Logged out successfully!');
+      window.location.href = 'index.html';
+    }
   </script>
 
 </body>
+
 </html>

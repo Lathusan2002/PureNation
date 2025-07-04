@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register - Pure Nation</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -11,6 +12,7 @@
       background-color: #f3f4f6;
       padding: 4rem 0;
     }
+
     .register-form {
       max-width: 900px;
       margin: auto;
@@ -19,43 +21,51 @@
       border-radius: 1rem;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
     }
+
     .register-form h2 {
       text-align: center;
       color: var(--primary);
       margin-bottom: 1rem;
     }
+
     .form-row {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 1rem;
     }
+
     .form-group {
       flex: 1;
       display: flex;
       flex-direction: column;
     }
+
     .form-group label {
       margin-bottom: 0.5rem;
       font-weight: bold;
       color: #374151;
     }
+
     .form-group input,
     .form-group select {
       padding: 0.75rem;
       border-radius: 0.5rem;
       border: 1px solid #d1d5db;
     }
+
     .form-group .optional {
       font-weight: normal;
       font-size: 0.875rem;
       color: #6b7280;
     }
+
     .error {
       font-size: 0.8rem;
       color: red;
       margin-top: 0.25rem;
     }
+
     .btn-primary {
       width: 100%;
       padding: 1rem;
@@ -66,14 +76,17 @@
       background-color: var(--primary);
       color: white;
     }
+
     .btn-primary:hover {
       background-color: var(--primaryDark);
     }
+
     .signin-link {
       text-align: center;
       margin-top: 1.5rem;
       font-size: 0.95rem;
     }
+
     .signin-link a {
       color: var(--primary);
       font-weight: bold;
@@ -81,6 +94,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- Navbar -->
@@ -108,7 +122,7 @@
   <!-- Register Form Section -->
   <section class="register-page">
     <div class="container">
-      <form class="register-form" action="#" method="post">
+      <form class="register-form" action="#" method="post" enctype="multipart/form-data">
         <h2>Join Our Team!</h2>
         <div class="signin-link">
           Already have an account? <a href="signin.html">Sign In here</a>
@@ -124,6 +138,7 @@
             <label>Last Name *</label>
             <input type="text" name="lastName" required />
           </div>
+
         </div>
 
         <div class="form-row">
@@ -184,6 +199,14 @@
           </div>
         </div>
 
+        <div class="form-row">
+          <div class="form-group">
+            <label>Profile Picture <span class="optional">(Optional)</span></label>
+            <input type="file" name="profilePicture" accept="image/*" />
+          </div>
+
+        </div>
+
         <button type="submit" class="btn-primary">Register</button>
       </form>
     </div>
@@ -197,7 +220,8 @@
           <a href="index.html" class="logo">
             <i class="fas fa-leaf"></i><span>Pure Nation</span>
           </a>
-          <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental awareness.</p>
+          <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental
+            awareness.</p>
           <div class="social-links">
             <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
@@ -232,7 +256,45 @@
 
   <script>
     document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    const form = document.querySelector(".register-form");
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+
+      const password = formData.get("password");
+      const confirmPassword = formData.get("confirmPassword");
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/register", {
+          method: "POST",
+          body: formData,
+          credentials: "include"
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          alert("Registration successful! Redirecting to sign-in...");
+          window.location.href = "signin.html";
+        } else {
+          alert(data.message || "Registration failed.");
+        }
+      } catch (err) {
+        console.error("Registration error:", err);
+        alert("An error occurred during registration.");
+      }
+    });
   </script>
 
+
 </body>
+
 </html>

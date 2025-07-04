@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,21 +12,25 @@
     .leaderboard-page {
       padding: 3rem 0;
     }
+
     .leaderboard-tabs {
       display: flex;
       border-bottom: 1px solid var(--border);
       margin-bottom: 2rem;
     }
+
     .leaderboard-tab {
       padding: 1rem 2rem;
       cursor: pointer;
       border-bottom: 2px solid transparent;
     }
+
     .leaderboard-tab.active {
       border-bottom: 2px solid var(--primary);
       color: var(--primary);
       font-weight: 500;
     }
+
     .achievement-badge {
       display: inline-flex;
       align-items: center;
@@ -37,43 +42,54 @@
       color: var(--card);
       background-color: var(--text-light);
     }
+
     .achievement-badge i {
       margin-right: 0.25rem;
     }
+
     .badge-gold {
       background-color: #fbbf24;
     }
+
     .badge-silver {
       background-color: #94a3b8;
     }
+
     .badge-bronze {
       background-color: #b45309;
     }
+
     .rank-1 .leaderboard-item {
       background-color: rgba(251, 191, 36, 0.1);
     }
+
     .rank-2 .leaderboard-item {
       background-color: rgba(148, 163, 184, 0.1);
     }
+
     .rank-3 .leaderboard-item {
       background-color: rgba(180, 83, 9, 0.1);
     }
+
     .full-leaderboard {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1rem;
     }
+
     .leaderboard-row {
       background-color: var(--card);
       border-radius: 0.5rem;
       overflow: hidden;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     }
+
     .user-achievements {
       padding: 1rem;
       display: flex;
       flex-wrap: wrap;
     }
+
     @media (max-width: 768px) {
       .leaderboard-tab {
         padding: 0.75rem 1rem;
@@ -81,29 +97,10 @@
     }
   </style>
 </head>
-<body>
 
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container">
-      <div class="navbar-content">
-        <a href="index.html" class="logo">
-          <i class="fas fa-leaf"></i><span>PureNation</span>
-        </a>
-        <div class="nav-links" id="navLinks" data-user="">
-          <a href="index.html" class="nav-link">Home</a>
-          <a href="events.html" class="nav-link">Events</a>
-          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
-          <a class="nav-link" href="signin.html">
-            <button class="btn-primary">Get Involved</button>
-          </a>
-        </div>
-        <button class="menu-toggle" id="menuToggle">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-    </div>
-  </nav>
+<body>
+  <div id="header"></div>
+
 
   <!-- Page Header -->
   <section class="hero" style="padding: 5rem 0;">
@@ -128,132 +125,76 @@
     </div>
   </section>
 
+  <!-- Replace the <script> section near the bottom of your file with this -->
   <script>
-  const allTimeLeaderboard = [
-    {
-      id: 1,
-      name: "Sanjana Perera",
-      avatar: "https://i.pravatar.cc/150?img=1",
-      eventsParticipated: 18,
-      hoursContributed: 72,
-      points: 3200,
-      achievements: ["Community Leader", "Forest Guardian", "Recycling Champion"]
-    },
-    {
-      id: 2,
-      name: "Asanka Fernando",
-      avatar: "https://i.pravatar.cc/150?img=2",
-      eventsParticipated: 16,
-      hoursContributed: 64,
-      points: 3100,
-      achievements: ["Beach Cleanup Pro", "River Guardian"]
-    },
-    {
-      id: 3,
-      name: "Dinesha Silva",
-      avatar: "https://i.pravatar.cc/150?img=3",
-      eventsParticipated: 15,
-      hoursContributed: 60,
-      points: 3000,
-      achievements: ["Tree Planter", "Environmental Educator"]
-    }
-  ];
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabs = document.querySelectorAll('.leaderboard-tab');
+      const leaderboardContainer = document.getElementById('fullLeaderboard');
 
-  const monthlyLeaderboard = [
-    {
-      id: 4,
-      name: "Chamath Jayasinghe",
-      avatar: "https://i.pravatar.cc/150?img=4",
-      eventsParticipated: 6,
-      hoursContributed: 24,
-      points: 1150,
-      achievements: ["Waste Warrior", "Plastic Fighter"]
-    },
-    {
-      id: 2,
-      name: "Asanka Fernando",
-      avatar: "https://i.pravatar.cc/150?img=2",
-      eventsParticipated: 5,
-      hoursContributed: 20,
-      points: 1050,
-      achievements: ["River Guardian"]
-    }
-  ];
+      async function fetchLeaderboard(type = 'all-time') {
+        try {
+          const response = await fetch(`http://localhost:5000/api/leaderboard?type=${type}`);
+          if (!response.ok) throw new Error('Failed to load leaderboard');
+          const data = await response.json();
+          loadLeaderboard(data);
+        } catch (err) {
+          leaderboardContainer.innerHTML = `<p class="error">${err.message}</p>`;
+        }
+      }
 
-  const weeklyLeaderboard = [
-    {
-      id: 5,
-      name: "Nilmini Fernando",
-      avatar: "https://i.pravatar.cc/150?img=5",
-      eventsParticipated: 2,
-      hoursContributed: 8,
-      points: 500,
-      achievements: ["Earth Defender"]
-    },
-    {
-      id: 1,
-      name: "Sanjana Perera",
-      avatar: "https://i.pravatar.cc/150?img=1",
-      eventsParticipated: 1,
-      hoursContributed: 4,
-      points: 450,
-      achievements: ["Recycling Champion"]
-    }
-  ];
+      function loadLeaderboard(data) {
+        leaderboardContainer.innerHTML = '';
+        data.forEach((user, index) => {
+          const row = document.createElement('div');
+          row.className = `leaderboard-row rank-${index + 1}`;
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const tabs = document.querySelectorAll('.leaderboard-tab');
-    const leaderboardContainer = document.getElementById('fullLeaderboard');
+          let rankIcon = `<span>${index + 1}</span>`;
+          if (index === 0) rankIcon = `<i class="fas fa-trophy" style="color: #fbbf24;"></i>`;
+          else if (index === 1) rankIcon = `<i class="fas fa-medal" style="color: #94a3b8;"></i>`;
+          else if (index === 2) rankIcon = `<i class="fas fa-medal" style="color: #b45309;"></i>`;
 
-    function loadLeaderboard(data) {
-      leaderboardContainer.innerHTML = '';
-      data.forEach((user, index) => {
-        const row = document.createElement('div');
-        row.className = `leaderboard-row rank-${index + 1}`;
+          const profileImgSrc = user.profilePicture
+            ? `http://localhost:5000${user.profilePicture}`
+            : `https://i.pravatar.cc/150?u=${user.id}`;
 
-        let rankIcon = `<span>${index + 1}</span>`;
-        if (index === 0) rankIcon = `<i class="fas fa-trophy" style="color: #fbbf24;"></i>`;
-        else if (index === 1) rankIcon = `<i class="fas fa-medal" style="color: #94a3b8;"></i>`;
-        else if (index === 2) rankIcon = `<i class="fas fa-medal" style="color: #b45309;"></i>`;
 
-        const achievements = user.achievements?.map((achv) => {
-          return `<span class="achievement-badge"><i class="fas fa-star"></i>${achv}</span>`;
-        }).join('') || '';
 
-        row.innerHTML = `
-          <div class="leaderboard-item">
-            <div class="leaderboard-rank">${rankIcon}</div>
-            <div class="leaderboard-avatar"><img src="${user.avatar}" alt="${user.name}"></div>
-            <div class="leaderboard-info">
-              <div class="leaderboard-name">${user.name}</div>
-              <div class="leaderboard-stats">${user.eventsParticipated} events • ${user.hoursContributed} hours</div>
-            </div>
-            <div class="leaderboard-points">
-              <div class="points-value">${user.points.toLocaleString()}</div>
-              <div class="points-label">points</div>
-            </div>
-          </div>
-          <div class="user-achievements">${achievements}</div>
-        `;
-        leaderboardContainer.appendChild(row);
-      });
-    }
+          row.innerHTML = `
+      <div class="leaderboard-item">
+        <div class="leaderboard-rank">${rankIcon}</div>
+        <div class="leaderboard-avatar">
+          <img src="${profileImgSrc}" alt="${user.name}">
+        </div>
+        <div class="leaderboard-info">
+          <div class="leaderboard-name">${user.name}</div>
+          <div class="leaderboard-stats">${user.eventsParticipated} events • ${user.hoursContributed} hours</div>
+        </div>
+        <div class="leaderboard-points">
+          <div class="points-value">${user.points.toLocaleString()}</div>
+          <div class="points-label">points</div>
+        </div>
+      </div>
+    `;
+          leaderboardContainer.appendChild(row);
+        });
+      }
 
-    // Load all-time leaderboard by default
-    loadLeaderboard(allTimeLeaderboard);
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        const type = tab.getAttribute('data-tab');
-        if (type === 'all-time') loadLeaderboard(allTimeLeaderboard);
-        else if (type === 'monthly') loadLeaderboard(monthlyLeaderboard);
-        else if (type === 'weekly') loadLeaderboard(weeklyLeaderboard);
+
+      // Load all-time leaderboard by default
+      fetchLeaderboard();
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const type = tab.getAttribute('data-tab');
+          fetchLeaderboard(type);
+        });
       });
     });
-  });
-</script>
+  </script>
+
 
   <!-- Footer -->
   <footer class="footer">
@@ -263,7 +204,8 @@
           <a href="index.html" class="logo">
             <i class="fas fa-leaf"></i><span>Pure Nation</span>
           </a>
-          <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental awareness.</p>
+          <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental
+            awareness.</p>
           <div class="social-links">
             <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
@@ -298,16 +240,113 @@
 
   <!-- JavaScript -->
   <script src="script.js"></script>
+
   <script>
-    // Set the current year in footer
+    // Load the header and update the auth buttons
+    fetch("header.html").then(res => res.text()).then(html => {
+      document.getElementById("header").innerHTML = html;
+
+      // Wait for header content to render before modifying auth-section
+      const authSection = document.getElementById('auth-section');
+      const userId = localStorage.getItem('userId');
+      const userName = localStorage.getItem('userName');
+
+      if (authSection) {
+        if (userId && userName) {
+          authSection.innerHTML = `
+          <a href="profile.html" class="nav-link">My Profile</a>
+          <a href="#" class="nav-link" onclick="logout()" style="color: red;">Logout</a>
+        `;
+        } else {
+          authSection.innerHTML = `
+          <a href="signin.html" class="nav-link">Sign In</a>
+          <a href="register.html" class="nav-link">
+            <button class="btn-primary">Get Involved</button>
+          </a>
+        `;
+        }
+      }
+    });
+
+    // Global logout function
+    function logout() {
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userName');
+      alert('Logged out successfully.');
+      window.location.href = 'index.html';
+    }
+
+    // Set the current year in the footer
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('currentYear').textContent = new Date().getFullYear();
     });
-  </script>
-  <script>
-    // Your leaderboard JavaScript logic here
-    // Include your loadFullLeaderboard() and leaderboard data scripts below this line
+
+    // Leaderboard script
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabs = document.querySelectorAll('.leaderboard-tab');
+      const leaderboardContainer = document.getElementById('fullLeaderboard');
+
+      async function fetchLeaderboard(type = 'all-time') {
+        try {
+          const response = await fetch(`http://localhost:5000/api/leaderboard?type=${type}`);
+          if (!response.ok) throw new Error('Failed to load leaderboard');
+          const data = await response.json();
+          loadLeaderboard(data);
+        } catch (err) {
+          leaderboardContainer.innerHTML = `<p class="error">${err.message}</p>`;
+        }
+      }
+
+      function loadLeaderboard(data) {
+        leaderboardContainer.innerHTML = '';
+        data.forEach((user, index) => {
+          const row = document.createElement('div');
+          row.className = `leaderboard-row rank-${index + 1}`;
+
+          let rankIcon = `<span>${index + 1}</span>`;
+          if (index === 0) rankIcon = `<i class="fas fa-trophy" style="color: #fbbf24;"></i>`;
+          else if (index === 1) rankIcon = `<i class="fas fa-medal" style="color: #94a3b8;"></i>`;
+          else if (index === 2) rankIcon = `<i class="fas fa-medal" style="color: #b45309;"></i>`;
+
+          const profileImgSrc = user.profilePicture
+            ? `http://localhost:5000${user.profilePicture}`
+            : `https://i.pravatar.cc/150?u=${user.id}`;
+
+          row.innerHTML = `
+          <div class="leaderboard-item">
+            <div class="leaderboard-rank">${rankIcon}</div>
+            <div class="leaderboard-avatar">
+              <img src="${profileImgSrc}" alt="${user.name}">
+            </div>
+            <div class="leaderboard-info">
+              <div class="leaderboard-name">${user.name}</div>
+              <div class="leaderboard-stats">${user.eventsParticipated} events • ${user.hoursContributed} hours</div>
+            </div>
+            <div class="leaderboard-points">
+              <div class="points-value">${user.points.toLocaleString()}</div>
+              <div class="points-label">points</div>
+            </div>
+          </div>
+        `;
+          leaderboardContainer.appendChild(row);
+        });
+      }
+
+      // Default load: all-time
+      fetchLeaderboard();
+
+      // Tab click events
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const type = tab.getAttribute('data-tab');
+          fetchLeaderboard(type);
+        });
+      });
+    });
   </script>
 
 </body>
+
 </html>

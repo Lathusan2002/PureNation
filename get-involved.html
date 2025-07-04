@@ -1,13 +1,15 @@
 <!-- File: get-involved.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Get Involved - Pure Nation</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://kit.fontawesome.com/a2e0e6ad79.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
   <!-- Header -->
   <nav class="navbar">
@@ -35,7 +37,8 @@
   <section class="hero-section">
     <div class="container">
       <h1>Make a Difference with Pure Nation</h1>
-      <p>Join hands with us to build a cleaner, greener Sri Lanka. Whether you're a volunteer, sponsor, or advocate, your contribution matters!</p>
+      <p>Join hands with us to build a cleaner, greener Sri Lanka. Whether you're a volunteer, sponsor, or advocate,
+        your contribution matters!</p>
       <a href="register.html" class="btn-primary">Become a Volunteer</a>
     </div>
   </section>
@@ -71,7 +74,8 @@
           <a href="index.html" class="logo">
             <i class="fas fa-leaf"></i><span>Pure Nation</span>
           </a>
-          <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental awareness.</p>
+          <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental
+            awareness.</p>
           <div class="social-links">
             <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
@@ -104,8 +108,40 @@
     </div>
   </footer>
 
+  <!-- Scripts -->
   <script>
     document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    async function joinVolunteerOpportunity() {
+      const userId = localStorage.getItem('userId');
+      const opportunityId = '64fb1234c61a872b43ffffee';
+
+      if (!userId) {
+        alert('Please log in first to join an opportunity.');
+        window.location.href = 'signin.html';
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/involvement/join-volunteer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId, opportunityId })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert('✅ You’ve successfully joined the opportunity!');
+        } else {
+          alert('⚠️ Error: ' + result.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('❌ Something went wrong. Try again later.');
+      }
+    }
   </script>
 </body>
+
 </html>
