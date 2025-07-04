@@ -34,7 +34,6 @@ exports.submitSponsorship = async (req, res) => {
 };
 
 // GET /api/featured-sponsors
-// Get a list of featured sponsors
 exports.getFeaturedSponsors = async (req, res) => {
   try {
     const sponsors = await Sponsor.find({ featured: true }).lean();

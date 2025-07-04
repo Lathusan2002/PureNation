@@ -28,7 +28,6 @@ exports.joinVolunteer = async (req, res) => {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ success: false, message: 'User not found.' });
 
-    // Optional: You can store joined opportunities in user model
     if (!user.opportunitiesJoined) {
       user.opportunitiesJoined = [];
     }
@@ -60,7 +59,6 @@ exports.submitInterestRequest = async (req, res) => {
   }
 
   try {
-    // Log or send email/store to DB - here we just simulate response
     console.log('Interest submission received:', { name, email, interest });
 
     res.status(200).json({

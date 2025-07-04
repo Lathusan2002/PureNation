@@ -31,12 +31,27 @@ const EventSchema = new mongoose.Schema({
 
   coverImage: {
     type: String,
-    default: '' 
+    default: ''
   },
 
   createdAt: {
     type: Date,
     default: Date.now
+  },
+
+  durationHours: {
+    type: Number,
+    required: true
+  },
+
+  type: {
+    type: String,
+    required: true
+  },
+
+  maxParticipants: {
+    type: Number,
+    required: true
   }
 });
 
