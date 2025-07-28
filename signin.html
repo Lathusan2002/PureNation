@@ -148,57 +148,61 @@
     </div>
   </footer>
 
-  <script>
-    document.getElementById("currentYear").textContent = new Date().getFullYear();
+<script>
+  // Set current year in the footer
+  document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-    document.getElementById('signin-form').addEventListener('submit', async function (event) {
-      event.preventDefault();
+  // Handle login form submission
+  const signinForm = document.getElementById("signin-form");
 
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+  signinForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      try {
-        const res = await fetch('http://localhost:5000/api/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          credentials: 'include',
-          body: JSON.stringify({ email, password })
+    const emailInput = document.getElementById("email").value.trim();
+    const passwordInput = document.getElementById("password").value;
+
+    try {
+      // Send login request
+      const loginResponse = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({ email: emailInput, password: passwordInput })
+      });
+
+      const loginData = await loginResponse.json();
+
+      if (loginResponse.ok && loginData.success) {
+        // Check login session status
+        const statusResponse = await fetch("http://localhost:5000/api/auth/status", {
+          method: "GET",
+          credentials: "include"
         });
 
-        const data = await res.json();
+        const statusData = await statusResponse.json();
 
-        if (res.ok && data.success) {
-          const statusRes = await fetch('http://localhost:5000/api/auth/status', {
-            method: 'GET',
-            credentials: 'include'
-          });
+        if (statusData.loggedIn) {
+          // Save session info to localStorage
+          localStorage.setItem("userId", statusData.user.id);
+          localStorage.setItem("userName", statusData.user.name);
 
-          const statusData = await statusRes.json();
-
-          if (statusData.loggedIn) {
-            // ✅ Store userId and name in localStorage
-            localStorage.setItem('userId', statusData.user.id);
-            localStorage.setItem('userName', statusData.user.name);
-
-            alert('Login successful!');
-            window.location.href = 'index.html';
-          } else {
-            alert('Login failed. Session not saved.');
-          }
+          alert("Login successful!");
+          window.location.href = "index.html";
         } else {
-          alert(data.message || 'Login failed');
+          alert("Login failed. Unable to verify session.");
         }
-
-      } catch (error) {
-        console.error('Login error:', error);
-        alert('An error occurred. Please try again.');
+      } else {
+        alert(loginData.message || "Invalid email or password.");
       }
-    });
-  </script>
 
-
+    } catch (err) {
+      console.error("Login error:", err);
+      alert("An unexpected error occurred. Please try again later.");
+    }
+  });
+</script>
 
 </body>
 
