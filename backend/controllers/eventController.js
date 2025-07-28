@@ -141,29 +141,34 @@ if (existingParticipation) {
 }
 
 
-    const participation = new Participation({
-      userId,
-      eventId,
-      proofSubmitted: null,
-      adminApproved: null,
-      approvedAt: null,
-    });
+  try {
+  // Create a new participation record with default approval states
+  const newParticipation = new Participation({
+    userId,
+    eventId,
+    proofSubmitted: null,
+    adminApproved: null,
+    approvedAt: null,
+  });
 
-    await participation.save();
+  // Save the participation to the database
+  await newParticipation.save();
 
-    res.status(201).json({
-      success: true,
-      message:
-        "Registered successfully. Pending proof submission and admin approval.",
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Event registration failed",
-      error: error.message,
-    });
-  }
-};
+  // Respond with success message
+  return res.status(201).json({
+    success: true,
+    message: "Registration successful. Awaiting proof submission and admin approval.",
+  });
+
+} catch (error) {
+  console.error("Error during event registration:", error);
+  return res.status(500).json({
+    success: false,
+    message: "Event registration failed.",
+    error: error.message,
+  });
+}
+
 
 // GET /api/events/:id
 exports.getEventById = async (req, res) => {
