@@ -216,50 +216,80 @@ exports.createEvent = async (req, res) => {
     maxParticipants,
   } = req.body;
 
-  const coverImage = req.file
-    ? `/uploads/${req.file.filename}`
-    : req.body.coverImage || "";
+  // Helper to check if any required field is missing or empty
+  const requiredFields = { title, date, location, type, description, durationHours, maxParticipants };
+  const missingFields = Object.entries(requiredFields)
+    .filter(([key, value]) => value === undefined || value === null || value === '');
 
-  if (
-    !title ||
-    !date ||
-    !location ||
-    !type ||
-    !description ||
-    !durationHours ||
-    !maxParticipants
-  ) {
+  if (missingFields.length > 0) {
     return res.status(400).json({
       success: false,
-      message: "All required fields must be provided",
+      message: `Missing required fields: ${missingFields.map(f => f[0]).join(', ')}`,
     });
   }
 
+  // Determine cover image path
+  const coverImage = req.file
+    ? `/uploads/${req.file.filename}`
+    : (req.body.coverImage || "");
+
   try {
-    const event = new Event({
+    const newEvent = new Event({
       title,
       date,
       location,
+      type,
       description,
       durationHours,
-      type,
-      coverImage,
       maxParticipants,
+      coverImage,
+      createdAt: new Date(),
     });
 
-    await event.save();
+    await newEvent.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
-      message: "Event created successfully",
-      event,
+      message: "Event created successfully.",
+      event: newEvent,
     });
+
   } catch (error) {
     console.error("Error creating event:", error);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Failed to create event",
+      message: "Failed to create event.",
       error: error.message,
     });
   }
 };
+
+ try {
+  const newEvent = new Event({
+    title,
+    date,
+    location,
+    description,
+    durationHours,
+    type,
+    coverImage,
+    maxParticipants,
+  });
+
+  await newEvent.save();
+
+  console.log(`Event created with ID: ${newEvent._id}`);
+
+  return res.status(201).json({
+    success: true,
+    message: "Event created successfully",
+    event: newEvent,
+  });
+} catch (error) {
+  console.error("Error creating event:", error);
+  return res.status(500).json({
+    success: false,
+    message: "Failed to create event",
+    error: error.message,
+  });
+}
