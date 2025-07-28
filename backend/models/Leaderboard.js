@@ -13,11 +13,12 @@ const LeaderboardSchema = new mongoose.Schema({
     default: 0
   },
 
-  hoursContributed: {
-    type: Number,
-    required: true,
-    default: 0
-  },
+ hoursContributed: {
+  type: Number,
+  min: 0,
+  default: 0,
+  required: false
+},
 
   eventsParticipated: {
     type: Number,

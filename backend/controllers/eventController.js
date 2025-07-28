@@ -2,18 +2,40 @@ const Event = require("../models/Event");
 const User = require("../models/User");
 const Participation = require("../models/Participation");
 
-// GET /api/events
 exports.getAllEvents = async (req, res) => {
   try {
-    const events = await Event.find().sort({ date: 1 });
+    // Fetch all events sorted by date
+    const events = await Event.find().sort({ date: 1 }).lean();
 
-    // Add approvedParticipants to each event
+    // Attach approved participant count to each event
     const eventsWithApprovedCount = await Promise.all(
       events.map(async (event) => {
         const approvedCount = await Participation.countDocuments({
           eventId: event._id,
           adminApproved: true,
         });
+
+        return {
+          ...event,
+          approvedParticipants: approvedCount,
+        };
+      })
+    );
+
+    res.status(200).json({
+      success: true,
+      events: eventsWithApprovedCount,
+    });
+
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch events.",
+    });
+  }
+};
+
 
         return {
           ...event.toObject(),
