@@ -78,20 +78,43 @@ exports.registerForEvent = async (req, res) => {
   if (!userId || !eventId) {
     return res.status(400).json({
       success: false,
-      message: "Both userId and eventId are required",
+      message: "Both userId and eventId are required.",
     });
   }
 
   try {
-    const event = await Event.findById(eventId);
-    const user = await User.findById(userId);
+    // Fetch user and event concurrently
+    const [user, event] = await Promise.all([
+      User.findById(userId),
+      Event.findById(eventId),
+    ]);
 
-    if (!event || !user) {
+    if (!user) {
       return res.status(404).json({
         success: false,
-        message: "User or Event not found",
+        message: "User not found.",
       });
     }
+
+    if (!event) {
+      return res.status(404).json({
+        success: false,
+        message: "Event not found.",
+      });
+    }
+
+    // Proceed with registration logic here
+    // ...
+
+  } catch (error) {
+    console.error("Error during event registration:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error while registering for event.",
+    });
+  }
+};
+
 
     // Check if event is full
     const approvedCount = await Participation.countDocuments({
