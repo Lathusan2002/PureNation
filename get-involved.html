@@ -1,0 +1,302 @@
+<!-- File: get-involved.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Involved - Pure Nation</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://kit.fontawesome.com/a2e0e6ad79.js" crossorigin="anonymous"></script>
+  <style>
+    /* Improved Hero Section */
+    .hero-section {
+      background: url('https://source.unsplash.com/1600x900/?nature,environment') center/cover no-repeat;
+      position: relative;
+      padding: 6rem 1rem 5rem;
+      color: white;
+      text-align: center;
+      overflow: hidden;
+      border-radius: 0.75rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+    }
+
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.85), rgba(14, 165, 233, 0.85));
+      z-index: 0;
+      border-radius: 0.75rem;
+    }
+
+    .hero-section .container {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .hero-section h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-shadow: 0 2px 6px rgb(0 0 0 / 0.5);
+    }
+
+    .hero-section p {
+      font-size: 1.15rem;
+      margin-bottom: 2rem;
+      text-shadow: 0 1px 4px rgb(0 0 0 / 0.4);
+    }
+
+    .hero-section a.btn-primary {
+      padding: 0.75rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      box-shadow: 0 6px 12px rgb(14 165 233 / 0.5);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hero-section a.btn-primary:hover {
+      background-color: #0c6a28;
+      box-shadow: 0 8px 20px rgb(10 120 70 / 0.7);
+    }
+
+    /* Cards Grid */
+    .get-involved-options .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Cards */
+    .get-involved-options .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 6px 15px rgb(0 0 0 / 0.1);
+      padding: 2.5rem 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+
+    .get-involved-options .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 30px rgb(0 0 0 / 0.15);
+    }
+
+    .get-involved-options .card i {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .get-involved-options .card:hover i {
+      color: var(--primary-dark);
+    }
+
+    .get-involved-options h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .get-involved-options p {
+      color: var(--text-light);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+      max-width: 320px;
+    }
+
+    .get-involved-options .btn-secondary {
+      padding: 0.6rem 1.75rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      font-size: 1rem;
+      background-color: var(--secondary);
+      box-shadow: 0 4px 12px rgb(14 165 233 / 0.4);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .get-involved-options .btn-secondary:hover {
+      background-color: #0b7acb;
+      box-shadow: 0 6px 20px rgb(14 165 233 / 0.6);
+    }
+
+    /* Footer tweaks */
+    .footer-info p {
+      max-width: 300px;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .footer-links ul {
+      padding-left: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.6rem;
+      font-size: 0.9rem;
+    }
+
+    .footer-contact form input,
+    .footer-contact form textarea {
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .footer-contact form button.btn-primary {
+      width: 100%;
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-content">
+        <a href="index.html" class="logo">
+          <i class="fas fa-leaf"></i><span>PureNation</span>
+        </a>
+        <div class="nav-links" id="navLinks" data-user="">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="events.html" class="nav-link">Events</a>
+          <a href="leaderboard.html" class="nav-link">Leaderboard</a>
+          <a class="nav-link" href="register.html">
+            <button class="nav-link-btn">Get Involved</button>
+          </a>
+        </div>
+        <button class="menu-toggle" id="menuToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <section class="hero-section">
+    <div class="container">
+      <h1>Make a Difference with Pure Nation</h1>
+      <p>Join hands with us to build a cleaner, greener Sri Lanka. Whether you're a volunteer, sponsor, or advocate,
+        your contribution matters!</p>
+      <a href="register.html" class="btn-primary">Become a Volunteer</a>
+    </div>
+  </section>
+
+  <section class="get-involved-options container">
+    <div class="card-grid">
+      <div class="card">
+        <i class="fas fa-hands-helping fa-3x"></i>
+        <h3>Volunteer</h3>
+        <p>Participate in cleanups, awareness drives, and other sustainability efforts. Every small act counts.</p>
+        <a href="events.html" class="btn-secondary">Find Events</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-hand-holding-heart fa-3x"></i>
+        <h3>Sponsor</h3>
+        <p>Support our initiatives by sponsoring campaigns or providing materials for local events.</p>
+        <a href="sponsor.html" class="btn-secondary">Become a Sponsor</a>
+      </div>
+      <div class="card">
+        <i class="fas fa-bullhorn fa-3x"></i>
+        <h3>Spread the Word</h3>
+        <p>Share our message on social media, in your communities, or organize awareness sessions.</p>
+        <a href="#" class="btn-secondary">Get Resources</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-info">
+          <a href="index.html" class="logo">
+            <i class="fas fa-leaf"></i><span>Pure Nation</span>
+          </a>
+          <p>Working together to create a cleaner, greener Sri Lanka through community action and environmental
+            awareness.</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="get-involved.html">How to Volunteer</a></li>
+            <li><a href="sponsor.html">Sponsorship Opportunities</a></li>
+            <li><a href="#">Education Materials</a></li>
+            <li><a href="#">Waste Management Tips</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h3>Contact Us</h3>
+          <p>Have questions or suggestions? We'd love to hear from you.</p>
+          <form id="contactForm">
+            <input type="email" placeholder="Your email" required />
+            <textarea placeholder="Your message" rows="3" required></textarea>
+            <button type="submit" class="btn-primary">Send Message</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="currentYear"></span> Pure Nation. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    async function joinVolunteerOpportunity() {
+      const userId = localStorage.getItem('userId');
+      const opportunityId = '64fb1234c61a872b43ffffee';
+
+      if (!userId) {
+        alert('Please log in first to join an opportunity.');
+        window.location.href = 'signin.html';
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/involvement/join-volunteer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId, opportunityId })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert('You’ve successfully joined the opportunity!');
+        } else {
+          alert('Error: ' + result.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Something went wrong. Try again later.');
+      }
+    }
+  </script>
+</body>
+
+</html>
