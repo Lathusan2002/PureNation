@@ -10,16 +10,19 @@ const EventSchema = new mongoose.Schema(
     date: {
       type: Date,
       required: [true, "Event date is required"],
+      index: true, // for faster querying/sorting by date
     },
     location: {
       type: String,
       required: [true, "Location is required"],
       trim: true,
+      default: "",
     },
     description: {
       type: String,
       required: [true, "Description is required"],
       trim: true,
+      default: "",
     },
     participants: [
       {
@@ -35,26 +38,32 @@ const EventSchema = new mongoose.Schema(
     durationHours: {
       type: Number,
       required: [true, "Duration is required"],
-      min: 1,
+      min: [1, "Duration must be at least 1 hour"],
     },
     type: {
       type: String,
       required: [true, "Event type is required"],
       trim: true,
+      lowercase: true,
+      default: "",
     },
     maxParticipants: {
       type: Number,
       required: [true, "Maximum participants is required"],
-      min: 1,
+      min: [1, "There must be at least 1 participant"],
     },
     status: {
       type: String,
-      enum: ["active", "completed", "cancelled"],
+      enum: {
+        values: ["active", "completed", "cancelled"],
+        message: "Status must be either active, completed, or cancelled",
+      },
+      lowercase: true,
       default: "active",
     },
   },
   {
-    timestamps: true, // adds createdAt and updatedAt automatically
+    timestamps: true, // Adds createdAt and updatedAt automatically
   }
 );
 
