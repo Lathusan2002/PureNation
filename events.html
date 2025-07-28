@@ -19,17 +19,16 @@
         
       }
 
-      @media (max-width: 768px) {
-        .nav-links {
-          display: none;
-          flex-direction: column;
-          gap: 1rem;
-          
-          background: white;
-          padding: 1rem;
-         
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
+     @media (max-width: 768px) {
+  .nav-links {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+    flex-direction: column;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 0;
+  }
 
         .nav-links.show {
           display: flex;
