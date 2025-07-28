@@ -117,25 +117,29 @@ exports.registerForEvent = async (req, res) => {
 
 
     // Check if event is full
-    const approvedCount = await Participation.countDocuments({
-      eventId: event._id,
-      adminApproved: true,
-    });
+    // Count how many participants are already approved for this event
+const approvedCount = await Participation.countDocuments({
+  eventId: event._id,
+  adminApproved: true,
+});
 
-    if (event.maxParticipants && approvedCount >= event.maxParticipants) {
-      return res.status(400).json({
-        success: false,
-        message: "Event has reached maximum capacity",
-      });
-    }
+// Check if event capacity is reached
+if (event.maxParticipants && approvedCount >= event.maxParticipants) {
+  return res.status(400).json({
+    success: false,
+    message: "Event has reached maximum capacity.",
+  });
+}
 
-    const existing = await Participation.findOne({ userId, eventId });
-    if (existing) {
-      return res.status(409).json({
-        success: false,
-        message: "Already registered for this event",
-      });
-    }
+// Check if user is already registered
+const existingParticipation = await Participation.findOne({ userId, eventId });
+if (existingParticipation) {
+  return res.status(409).json({
+    success: false,
+    message: "User is already registered for this event.",
+  });
+}
+
 
     const participation = new Participation({
       userId,
