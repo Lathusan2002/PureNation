@@ -4,15 +4,17 @@ const sponsorSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, 'Name is required'],
       trim: true,
     },
     email: {
       type: String,
-      required: true,
+      required: [true, 'Email is required'],
       trim: true,
       lowercase: true,
+      unique: true,
       match: [/^\S+@\S+\.\S+$/, 'Invalid email format'],
+      index: true,
     },
     organization: {
       type: String,
@@ -23,10 +25,12 @@ const sponsorSchema = new Schema(
       type: String,
       trim: true,
       default: '',
+      // Optional stricter phone validation (uncomment if needed)
+      // match: [/^\+?[0-9\s\-]{7,15}$/, 'Invalid phone number'],
     },
     message: {
       type: String,
-      required: true,
+      required: [true, 'Message is required'],
       trim: true,
     },
     isFeatured: {
@@ -45,8 +49,9 @@ const sponsorSchema = new Schema(
     },
   },
   {
-    timestamps: true, // Auto adds createdAt and updatedAt
+    timestamps: true, // Adds createdAt and updatedAt automatically
   }
 );
 
 module.exports = model('Sponsor', sponsorSchema);
+
