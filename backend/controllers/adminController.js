@@ -1,22 +1,45 @@
 app.post('/api/participation/approve', async (req, res) => {
+  const { userId, eventId } = req.body;
+
+  // Input validation
+  if (!userId || !eventId) {
+    return res.status(400).json({
+      success: false,
+      message: 'Both userId and eventId must be provided.',
+    });
+  }
+
   try {
-    const { userId, eventId } = req.body;
+    const updateData = {
+      adminApproved: true,
+      approvedAt: new Date(),
+    };
 
-    // Validate input
-    if (!userId || !eventId) {
-      return res.status(400).json({ success: false, message: 'userId and eventId are required' });
-    }
-
-    // Attempt to update the participation
     const result = await Participation.updateOne(
       { userId, eventId },
-      {
-        $set: {
-          adminApproved: true,
-          approvedAt: new Date()
-        }
-      }
+      { $set: updateData }
     );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Participation record not found.',
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Participation approved successfully.',
+      updatedCount: result.modifiedCount,
+    });
+  } catch (error) {
+    console.error('Error approving participation:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'An error occurred while approving participation.',
+    });
+  }
+});
 
     // Check if a document was actually updated
     if (result.modifiedCount === 0) {
