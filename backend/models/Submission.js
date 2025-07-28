@@ -1,45 +1,43 @@
-const mongoose = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
-const SubmissionSchema = new mongoose.Schema({
+const submissionSchema = new Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'User',
-    required: true
+    required: [true, 'User ID is required']
   },
-
   eventId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'Event',
-    required: true
+    required: [true, 'Event ID is required']
   },
-
   description: {
     type: String,
-    required: true,
-    trim: true
+    trim: true,
+    required: [true, 'Description is required'],
+    minlength: 5
   },
-
   photoUrl: {
     type: String,
-    required: true
+    required: [true, 'Photo URL is required'],
+    trim: true
   },
-
   hours: {
     type: Number,
-    required: true,
-    min: 0
+    min: [0, 'Hours must be a non-negative number'],
+    required: [true, 'Hours are required']
   },
-
   submittedAt: {
     type: Date,
-    default: Date.now
+    default: () => Date.now()
   },
-
   status: {
     type: String,
     enum: ['pending', 'approved', 'rejected'],
     default: 'pending'
   }
+}, {
+  timestamps: true // adds createdAt and updatedAt
 });
 
-module.exports = mongoose.model('Submission', SubmissionSchema);
+module.exports = model('Submission', submissionSchema);
