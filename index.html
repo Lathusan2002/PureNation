@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pure Nation - Sri Lanka Green Up</title>
+    <meta
+      name="description"
+      content="Working together to create a cleaner, greener Sri Lanka"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- Load Header -->
+    <div id="header"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <h1>Let's Make Sri Lanka Clean, Green and Beautiful Together</h1>
+          <p>
+            Join our movement to create a cleaner environment through community
+            action and volunteer projects across Sri Lanka.
+          </p>
+          <div class="hero-buttons">
+            <a href="/events.html" class="btn-primary">Join a Cleanup</a>
+            <a href="/sponsor.html" class="btn-outline">Become a Sponsor</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Events -->
+    <section class="featured-events">
+      <div class="container">
+        <div class="section-header-with-link">
+          <div>
+            <h2>Featured Cleanup Events</h2>
+            <p>Join these upcoming events and make a difference in your community</p>
+          </div>
+          <a href="/events.html" class="view-all">
+            View all events <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+        <div class="events-grid" id="featuredEvents"></div>
+      </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section class="leaderboard">
+    <div class="container">
+      <div class="section-header">
+        <h2>Top Volunteers</h2>
+        <p>Recognizing the dedication and hard work of our most active volunteers</p>
+      </div>
+      <div class="leaderboard-container">
+        <div class="leaderboard-list" id="leaderboardList"></div>
+        <div class="text-center">
+          <a href="/leaderboard.html" class="btn-outline">View Full Leaderboard</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Scripts -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Load Header
+        fetch("header.html")
+          .then((res) => res.text())
+          .then((html) => {
+            document.getElementById("header").innerHTML = html;
+
+            const navLinks = document.getElementById("navLinks");
+            const menuToggle = document.getElementById("menuToggle");
+
+            // Toggle mobile menu
+            if (menuToggle && navLinks) {
+              menuToggle.addEventListener("click", () => {
+                navLinks.classList.toggle("active");
+              });
+            }
+
+            const adminBtn = document.createElement("button");
+            adminBtn.id = "adminBtn";
+            adminBtn.className = "btn-secondary";
+            adminBtn.textContent = "Admin Panel";
+            adminBtn.style.marginLeft = "1rem";
+            if (navLinks) navLinks.appendChild(adminBtn);
+
+            adminBtn.addEventListener("click", async () => {
+              const username = prompt("Enter Admin Username:");
+              if (!username) return;
+              const password = prompt("Enter Admin Password:");
+              if (!password) return;
+
+              try {
+                const response = await fetch("http://localhost:5000/api/admin/login", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ username, password }),
+                });
+
+                const result = await response.json();
+                if (response.ok && result.success) {
+                  alert("Admin login successful!");
+                  window.location.href = "admin-dashboard.html";
+                } else {
+                  alert(result.message || "Invalid credentials");
+                }
+              } catch (error) {
+                console.error(error);
+                alert("Error connecting to the server.");
+              }
+            });
+
+            // Update Auth Section
+            const authSection = document.getElementById("auth-section");
+            const userId = localStorage.getItem("userId");
+            const userName = localStorage.getItem("userName");
+
+            if (authSection) {
+              if (userId && userName) {
+                authSection.innerHTML = `
+                  <a href="profile.html" class="nav-link">My Profile</a>
+                  <a href="#" class="nav-link" onclick="logout()" style="color: red;">Logout</a>
+                `;
+              } else {
+                authSection.innerHTML = `
+                  <a href="signin.html" class="nav-link">Sign In</a>
+                  <a href="register.html" class="nav-link">
+                    <button class="nav-link-btn">Get Involved</button>
+                  </a>
+                `;
+              }
+            }
+          });
+
+        // Load Footer
+        fetch("footer.html")
+          .then((res) => res.text())
+          .then((html) => {
+            document.getElementById("footer").innerHTML = html;
+            const year = new Date().getFullYear();
+            if (document.getElementById("currentYear")) {
+              document.getElementById("currentYear").textContent = year;
+            }
+          });
+
+        // Load Featured Events
+        fetch("http://localhost:5000/api/events")
+          .then((res) => res.json())
+          .then((events) => {
+            const container = document.getElementById("featuredEvents");
+            if (!Array.isArray(events) || events.length === 0) {
+              container.innerHTML = "<p>No featured events available.</p>";
+              return;
+            }
+
+            container.innerHTML = events
+              .map((event) => {
+                const approved = event.approvedParticipants || 0;
+                const max = event.maxParticipants || 30;
+                const percent = Math.min((approved / max) * 100, 100);
+                const date = new Date(event.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                });
+
+                return `
+                  <div class="event-card">
+                    <div class="event-image">
+                      <img src="${
+                        event.coverImage
+                          ? "http://localhost:5000" + event.coverImage
+                          : "./default-event.jpg"
+                      }" alt="${event.title}">
+                      <div class="event-status status-active">Active</div>
+                    </div>
+                    <div class="event-content">
+                      <div class="event-tags">
+                        <span class="event-tag">${event.location}</span>
+                        <span class="event-tag">${event.type}</span>
+                      </div>
+                      <h3 class="event-title">${event.title}</h3>
+                      <div class="event-meta"><i class="fas fa-calendar"></i> ${date}</div>
+                      <div class="event-meta"><i class="fas fa-map-marker-alt"></i> ${
+                        event.location
+                      }</div>
+                      <p class="event-description">${event.description}</p>
+                      <div class="volunteer-progress">
+                        <div class="progress-header">
+                          <span><i class="fas fa-users"></i> Volunteers</span>
+                          <span>${approved}/${max}</span>
+                        </div>
+                        <div class="progress-bar">
+                          <div class="progress-fill" style="width: ${percent}%;"></div>
+                        </div>
+                      </div>
+                      <a href="/event-details.html?id=${
+                        event._id
+                      }" class="btn-primary" style="width:100%; text-align:center;">Join Cleanup</a>
+                    </div>
+                  </div>
+                `;
+              })
+              .join("");
+          })
+          .catch((err) => {
+            console.error("Error loading featured events:", err);
+            document.getElementById("featuredEvents").innerHTML =
+              "<p>Failed to load featured events.</p>";
+          });
+
+        // Load Leaderboard
+        fetch("http://localhost:5000/api/leaderboard")
+          .then((res) => res.json())
+          .then((volunteers) => {
+            const container = document.getElementById("leaderboardList");
+            if (!Array.isArray(volunteers) || volunteers.length === 0) {
+              container.innerHTML = "<p>No top volunteers found.</p>";
+              return;
+            }
+
+            container.innerHTML = volunteers
+              .map((user, i) => {
+                const profileImg = user.profilePicture
+                  ? `http://localhost:5000${user.profilePicture}`
+                  : `https://i.pravatar.cc/40?u=${user.id}`;
+
+                return `
+                  <div class="leaderboard-item">
+                    <span class="rank">${i + 1}</span>
+                    <img src="${profileImg}" alt="${user.name}" class="avatar">
+                    <span class="name">${user.name}</span>
+                  </div>
+                `;
+              })
+              .join("");
+          });
+      });
+
+      function logout() {
+        localStorage.removeItem("userId");
+        localStorage.removeItem("userName");
+        alert("Logged out successfully.");
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>
