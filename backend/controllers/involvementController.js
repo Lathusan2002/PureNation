@@ -1,20 +1,27 @@
 const Opportunity = require('../models/Opportunity');
 const User = require('../models/User');
 
-// GET /api/involvement-opportunities
 exports.getOpportunities = async (req, res) => {
   try {
-    const opportunities = await Opportunity.find().lean();
+    const opportunities = await Opportunity.find()
+      .sort({ createdAt: -1 }) // optional: newest first
+      .lean();
 
-    res.json(opportunities);
+    return res.status(200).json({
+      success: true,
+      count: opportunities.length,
+      opportunities,
+    });
   } catch (error) {
-    res.status(500).json({
+    console.error('Error fetching involvement opportunities:', error);
+    return res.status(500).json({
       success: false,
       message: 'Failed to fetch involvement opportunities.',
       error: error.message,
     });
   }
 };
+
 
 // POST /api/join-volunteer
 exports.joinVolunteer = async (req, res) => {
