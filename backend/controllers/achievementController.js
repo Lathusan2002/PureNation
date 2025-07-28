@@ -22,27 +22,35 @@ exports.getAchievements = async (req, res) => {
 
 
 // (Optional) POST /api/achievements — Admin-only feature
+const Achievement = require('../models/Achievement');
+
+// POST /api/achievements
 exports.createAchievement = async (req, res) => {
-  const { title, icon, criteria } = req.body;
-
-  if (!title || !icon || !criteria) {
-    return res.status(400).json({ success: false, message: 'All fields are required.' });
-  }
-
   try {
-    const newAchievement = new Achievement({ title, icon, criteria });
-    await newAchievement.save();
+    const { title, icon, criteria } = req.body;
 
-    res.status(201).json({
+    // Validate input
+    if (!title || !icon || !criteria) {
+      return res.status(400).json({
+        success: false,
+        message: 'Title, icon, and criteria are required.',
+      });
+    }
+
+    const achievement = await Achievement.create({ title, icon, criteria });
+
+    return res.status(201).json({
       success: true,
       message: 'Achievement created successfully.',
-      achievement: newAchievement,
+      data: achievement,
     });
-  } catch (error) {
-    res.status(500).json({
+  } catch (err) {
+    console.error('Error creating achievement:', err);
+
+    return res.status(500).json({
       success: false,
-      message: 'Failed to create achievement',
-      error: error.message,
+      message: 'An error occurred while creating the achievement.',
     });
   }
 };
+
