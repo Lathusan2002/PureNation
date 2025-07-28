@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Event Details - Pure Nation</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- Header -->
+<div id="header"></div>
+
+<!-- Event Details -->
+<section class="event-details-section">
+  <div class="container">
+    <div id="eventContent">Loading event...</div>
+    <div style="margin-top: 1rem;" id="joinResult"></div>
+  </div>
+</section>
+
+<!-- Related Events -->
+<section class="featured-events" style="background-color: var(--muted); padding: 3rem 0;">
+  <div class="container">
+    <div class="section-header-with-link">
+      <div>
+        <h2>Similar Events</h2>
+        <p>You might also be interested in these cleanup events</p>
+      </div>
+      <a href="/events.html" class="view-all">View all events <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="events-grid" id="relatedEvents"></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div id="footer"></div>
+
+<!-- Dynamic Header/Footer Loader -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    fetch('header.html').then(res => res.text()).then(data => {
+      document.getElementById('header').innerHTML = data;
+    });
+    fetch('footer.html').then(res => res.text()).then(data => {
+      document.getElementById('footer').innerHTML = data;
+    });
+  });
+</script>
+
+<!-- Event Details Logic -->
+<script>
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const eventId = urlParams.get('id');
+  const userId = localStorage.getItem('userId'); 
+  console.log('Sending userId:', userId);
+console.log('Sending eventId:', eventId);
+  async function loadEventDetails() {
+    const eventContent = document.getElementById('eventContent');
+    if (!eventId) {
+      eventContent.innerHTML = '<p>Event ID not found in URL.</p>';
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/events/${eventId}`);
+      if (!response.ok) throw new Error('Failed to fetch event');
+      const event = await response.json();
+
+      const formattedDate = new Date(event.date).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+
+      const volunteerCount = event.approvedParticipants || 0;
+
+      eventContent.innerHTML = `
+        <div class="event-detail-card">
+          <img src="${event.coverImage || './default-event.jpg'}" alt="${event.title}" class="event-banner"/>
+          <h2>${event.title}</h2>
+          <p><strong>Date:</strong> ${formattedDate}</p>
+          <p><strong>Location:</strong> ${event.location}</p>
+          <p><strong>Description:</strong> ${event.description}</p>
+          <p><strong>Volunteers:</strong> ${volunteerCount}/30</p>
+          <button class="btn-primary" onclick="registerForEvent()">Join Cleanup</button>
+        </div>
+      `;
+    } catch (err) {
+      eventContent.innerHTML = `<p>Error loading event: ${err.message}</p>`;
+    }
+  }
+
+  async function registerForEvent() {
+    if (!userId) {
+      document.getElementById('joinResult').innerHTML = `<p class="error">Please sign in to join events.</p>`;
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/events/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, eventId })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        document.getElementById('joinResult').innerHTML = `<p class="success">${result.message}</p>`;
+        loadEventDetails(); // Refresh participant count
+      } else {
+        document.getElementById('joinResult').innerHTML = `<p class="error">${result.message}</p>`;
+      }
+    } catch (err) {
+      document.getElementById('joinResult').innerHTML = `<p class="error">Error: ${err.message}</p>`;
+    }
+  }
+
+  loadEventDetails();
+</script>
+
+</body>
+</html>
