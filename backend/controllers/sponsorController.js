@@ -2,34 +2,36 @@ const Sponsor = require("../models/Sponsor");
 
 // POST /api/sponsors
 // Submit a new sponsorship form
+const Sponsor = require('../models/Sponsor');
+
 exports.submitSponsorship = async (req, res) => {
   const { name, email, organization, phone, message } = req.body;
 
-  if (!name || !email || !message) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: "Name, email, and message are required.",
-      });
+  // Input validation
+  if (!name?.trim() || !email?.trim() || !message?.trim()) {
+    return res.status(400).json({
+      success: false,
+      message: "Name, email, and message are required.",
+    });
   }
 
   try {
-    const newSponsor = new Sponsor({
-      name,
-      email,
-      organization,
-      phone,
-      message,
+    const sponsorData = new Sponsor({
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      organization: organization?.trim() || "",
+      phone: phone?.trim() || "",
+      message: message.trim(),
     });
 
-    await newSponsor.save();
+    await sponsorData.save();
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
-      message: "Thank you for becoming a sponsor! We will contact you soon.",
+      message: "Thank you for your sponsorship interest! We'll be in touch soon.",
     });
   } catch (error) {
+    console.error("Sponsorship submission error:", error);
     res.status(500).json({
       success: false,
       message: "Failed to submit sponsorship.",
@@ -37,6 +39,7 @@ exports.submitSponsorship = async (req, res) => {
     });
   }
 };
+
 
 // GET /api/featured-sponsors
 // exports.getFeaturedSponsors = async (req, res) => {
