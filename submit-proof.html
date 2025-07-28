@@ -223,50 +223,46 @@
     </footer>
 
     <script>
-      // Handle proof form submission
-      document
-        .getElementById("proofForm")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
+  document.addEventListener("DOMContentLoaded", () => {
+    const proofForm = document.getElementById("proofForm");
+    const successMessage = document.getElementById("successMessage");
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
 
-          const form = this;
-          const formData = new FormData(form);
+    // ✅ Handle proof form submission
+    proofForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-          try {
-            const response = await fetch("/api/proof", {
-              method: "POST",
-              body: formData,
-            });
+      const formData = new FormData(proofForm);
 
-            if (response.ok) {
-              document.getElementById("successMessage").textContent =
-                "Thank you! Your proof has been submitted.";
-              form.reset();
-            } else {
-              const errorData = await response.json();
-              document.getElementById(
-                "successMessage"
-              ).textContent = `Submission failed: ${
-                errorData.message || "Unknown error"
-              }`;
-            }
-          } catch (error) {
-            document.getElementById("successMessage").textContent =
-              "Error submitting proof. Please try again.";
-            console.error("Submission error:", error);
-          }
+      try {
+        const res = await fetch("/api/proof", {
+          method: "POST",
+          body: formData,
         });
 
-      // Update footer year
-      document.getElementById("currentYear").textContent =
-        new Date().getFullYear();
+        const resultText = res.ok
+          ? "✅ Thank you! Your proof has been submitted."
+          : `❌ Submission failed: ${(await res.json()).message || "Unknown error"}`;
 
-      // Toggle mobile menu
-      document
-        .getElementById("menuToggle")
-        .addEventListener("click", function () {
-          document.getElementById("navLinks").classList.toggle("show");
-        });
-    </script>
+        successMessage.textContent = resultText;
+
+        if (res.ok) proofForm.reset();
+      } catch (err) {
+        console.error("Submission error:", err);
+        successMessage.textContent = "⚠️ Network error. Please try again.";
+      }
+    });
+
+    // ✅ Set footer year
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    // ✅ Toggle mobile menu
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
+  });
+</script>
+
   </body>
 </html>
