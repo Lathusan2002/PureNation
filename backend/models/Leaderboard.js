@@ -8,20 +8,20 @@ const LeaderboardSchema = new mongoose.Schema({
   },
 
   points: {
-  type: Number,
-  default: 0,
-  min: 0,
-},
+    type: Number,
+    min: 0,
+    default: 0
+  },
 
-hoursContributed: {
-  type: Number,
-  default: 0,
-  min: 0,
-},
+  hoursContributed: {
+    type: Number,
+    min: 0,
+    default: 0
+  },
 
   eventsParticipated: {
     type: Number,
-    required: true,
+    min: 0,
     default: 0
   },
 
@@ -36,5 +36,4 @@ hoursContributed: {
     default: Date.now
   }
 });
-
 module.exports = mongoose.model('Leaderboard', LeaderboardSchema);
