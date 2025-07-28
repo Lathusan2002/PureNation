@@ -76,13 +76,17 @@ exports.getLeaderboard = async (req, res) => {
     // Sort leaderboard based on hours
     const sortedLeaderboard = filterLeaderboard(leaderboard, type);
 
-    res.json(sortedLeaderboard);
-  } catch (error) {
-    console.error("Leaderboard error:", error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to fetch leaderboard",
-      error: error.message,
-    });
-  }
-};
+// Optional: Add rank numbers
+// sortedLeaderboard.forEach((entry, index) => entry.rank = index + 1);
+
+res.status(200).json({
+  success: true,
+  count: sortedLeaderboard.length,
+  type,
+  leaderboard: sortedLeaderboard,
+});
+
+const sortedLeaderboard = filterLeaderboard(leaderboard, type);
+
+res.json(sortedLeaderboard);
+
