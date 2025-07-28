@@ -36,31 +36,40 @@ exports.getAllEvents = async (req, res) => {
 );
 
 // Final response
-return res.status(200).json({
-  success: true,
-  count: eventsWithApprovedCount.length,
-  events: eventsWithApprovedCount,
-});
+exports.getAllEvents = async (req, res) => {
+  try {
+    const events = await Event.find().sort({ date: 1 });
 
-
+    const eventsWithApprovedCount = await Promise.all(
+      events.map(async (event) => {
+        const approvedCount = await Participation.countDocuments({
+          eventId: event._id,
+          adminApproved: true,
+        });
 
         return {
-          ...event.toObject(),
+          ...event.toObject(), // safer than directly spreading mongoose doc
           approvedParticipants: approvedCount,
         };
       })
     );
 
+    return res.status(200).json({
+      success: true,
+      count: eventsWithApprovedCount.length,
+      events: eventsWithApprovedCount,
+    });
 
-    res.status(200).json(eventsWithApprovedCount);
   } catch (error) {
-    res.status(500).json({
+    console.error("Error fetching events:", error);
+    return res.status(500).json({
       success: false,
       message: "Error fetching events",
       error: error.message,
     });
   }
 };
+
 
 // POST /api/events/register
 exports.registerForEvent = async (req, res) => {
