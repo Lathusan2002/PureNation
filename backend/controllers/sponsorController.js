@@ -56,13 +56,23 @@ exports.submitSponsorship = async (req, res) => {
 //   }
 // };
 
+const Sponsor = require('../models/Sponsor');
+
 exports.getAllSponsors = async (req, res) => {
   try {
-    const sponsors = await Sponsor.find().sort({ createdAt: -1 });
-    res.status(200).json(sponsors);
+    const sponsors = await Sponsor.find().sort({ createdAt: -1 }).lean();
+
+    res.status(200).json({
+      success: true,
+      count: sponsors.length,
+      data: sponsors,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to fetch sponsors", error: error.message });
+    console.error("Error fetching sponsors:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch sponsors",
+      error: error.message,
+    });
   }
 };
