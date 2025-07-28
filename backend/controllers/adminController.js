@@ -47,20 +47,39 @@ app.post('/api/participation/approve', async (req, res) => {
 
 
     // Check if a document was actually updated
-    if (result.modifiedCount === 0) {
-      return res.status(404).json({ success: false, message: 'Participation not found or already approved' })
-
-// For reject
-app.post('/api/participation/reject', async (req, res) => {
+  app.post('/api/participation/reject', async (req, res) => {
   const { userId, eventId } = req.body;
 
-  await Participation.updateOne(
-    { userId, eventId },
-    {
-      adminApproved: false,
-      approvedAt: new Date()
-    }
-  );
+  // Input validation
+  if (!userId || !eventId) {
+    return res.status(400).json({
+      success: false,
+      message: 'Both userId and eventId must be provided.',
+    });
+  }
 
-  res.json({ success: true });
+  try {
+    const result = await Participation.updateOne(
+      { userId, eventId },
+      {
+        adminApproved: false,
+        approvedAt: new Date()
+      }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'Participation not found or already rejected.',
+      });
+    }
+
+    res.json({ success: true, message: 'Participation rejected successfully.' });
+  } catch (error) {
+    console.error('Error rejecting participation:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error.',
+    });
+  }
 });
