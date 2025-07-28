@@ -7,18 +7,24 @@ const submitProof = async (req, res) => {
     const { email, event, hours, description } = req.body;
     const file = req.file;
 
-    // 1. Check if email is provided
-    if (!email) {
-      return res.status(400).json({ message: "Email is required." });
+    // Validate email presence
+    if (!email || typeof email !== 'string' || email.trim() === '') {
+      return res.status(400).json({ message: "Valid email is required." });
     }
 
-    // 2. Find the user by email
-    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    // Normalize email
+    const normalizedEmail = email.toLowerCase().trim();
+
+    // Find user by email
+    const user = await User.findOne({ email: normalizedEmail });
     if (!user) {
-      return res
-        .status(404)
-        .json({ message: "User not found with this email." });
+      return res.status(404).json({ message: "No user found with the provided email." });
     }
+
+    // Continue with your logic here (e.g., saving proof, etc.)
+    
+    // Example success response (you can replace with your logic)
+    return res.status(200).json({ message: "User found, proceed with proof
 
     const userId = user._id;
 
