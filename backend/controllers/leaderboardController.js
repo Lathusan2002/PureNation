@@ -1,18 +1,16 @@
-const User = require("../models/User");
-const Submission = require("../models/Submission");
-
-// Helper: Sort leaderboard
 function filterLeaderboard(users, type) {
-  if (type === "weekly") {
-    return users.sort((a, b) => (b.weeklyHours || 0) - (a.weeklyHours || 0));
-  } else if (type === "monthly") {
-    return users.sort((a, b) => (b.monthlyHours || 0) - (a.monthlyHours || 0));
-  } else {
-    return users.sort(
-      (a, b) => (b.volunteerHours || 0) - (a.volunteerHours || 0)
-    );
-  }
+  // Determine which field to sort by
+  let sortField = "volunteerHours";
+  if (type === "weekly") sortField = "weeklyHours";
+  else if (type === "monthly") sortField = "monthlyHours";
+
+  // Clone the array to avoid mutating the original
+  const clonedUsers = users.map(user => ({ ...user }));
+
+  // Sort in descending order based on selected field
+  return clonedUsers.sort((a, b) => (b[sortField] || 0) - (a[sortField] || 0));
 }
+
 
 // Helper: Get hours based on type
 function getHoursByType(user, type) {
