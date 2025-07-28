@@ -15,26 +15,33 @@ exports.getAllEvents = async (req, res) => {
           adminApproved: true,
         });
 
-        return {
-          ...event,
-          approvedParticipants: approvedCount,
-        };
-      })
-    );
-
-    res.status(200).json({
-      success: true,
-      events: eventsWithApprovedCount,
+       const eventsWithApprovedCount = await Promise.all(
+  events.map(async (event) => {
+    const approvedCount = await Participation.countDocuments({
+      eventId: event._id,
+      adminApproved: true,
     });
 
-  } catch (error) {
-    console.error("Error fetching events:", error);
-    res.status(500).json({
-      success: false,
-      message: "Failed to fetch events.",
-    });
-  }
-};
+    return {
+      _id: event._id,
+      title: event.title,
+      description: event.description,
+      location: event.location,
+      date: event.date,
+      time: event.time,
+      createdBy: event.createdBy,
+      approvedParticipants: approvedCount,
+    };
+  })
+);
+
+// Final response
+return res.status(200).json({
+  success: true,
+  count: eventsWithApprovedCount.length,
+  events: eventsWithApprovedCount,
+});
+
 
 
         return {
