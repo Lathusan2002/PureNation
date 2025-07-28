@@ -1,16 +1,28 @@
+const express = require('express');
+const bcrypt = require('bcryptjs');
+const router = express.Router();
 const User = require('../models/User');
 
 router.post('/login', async (req, res) => {
   try {
-    console.log("Incoming login body:", req.body);
-
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
-    if (!user) return res.status(401).json({ message: 'Invalid email or password' });
+    // Validate input
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: 'Email and password are required.' });
+    }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ message: 'Invalid email or password' });
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ success: false, message: 'Invalid email or password.' });
+    }
+
+    // Compare password
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(401).json({ success: false, message: 'Invalid email or password.' });
+    }
 
     // Store session data
     req.session.user = {
@@ -22,6 +34,22 @@ router.post('/login', async (req, res) => {
       volunteerHours: user.volunteerHours || 0,
       eventsParticipated: user.eventsParticipated || 0
     };
+
+    // Respond with success
+    return res.status(200).json({
+      success: true,
+      message: 'Login successful.',
+      user: req.session.user // optional
+    });
+
+  } catch (error) {
+    console.error('Login error:', error);
+    return res.status(500).json({ success: false, message: 'Internal server error.' });
+  }
+});
+
+module.exports = router;
+
 
     req.session.save(err => {
       if (err) {
