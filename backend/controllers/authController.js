@@ -69,22 +69,38 @@ module.exports = router;
 
 // GET /api/auth/status
 router.get('/status', (req, res) => {
-  if (req.session && req.session.user) {
+  if (req.session?.user) {
     return res.status(200).json({
+      success: true,
       loggedIn: true,
       user: req.session.user
     });
-  } else {
-    return res.status(200).json({ loggedIn: false });
   }
-});
 
-// POST /api/auth/logout
-router.post('/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err) return res.status(500).json({ message: 'Logout failed' });
-
-    res.clearCookie('connect.sid');
-    res.json({ message: 'Logged out successfully' });
+  return res.status(200).json({
+    success: true,
+    loggedIn: false,
+    message: 'No active session found.'
   });
 });
+router.post('/logout', (req, res) => {
+  if (!req.session) {
+    return res.status(400).json({ success: false, message: 'No active session to destroy.' });
+  }
+
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Logout error:', err);
+      return res.status(500).json({ success: false, message: 'Logout failed. Please try again.' });
+    }
+
+    res.clearCookie('connect.sid', {
+      path: '/',
+      httpOnly: true,
+      secure: false // set true if you're using HTTPS
+    });
+
+    return res.status(200).json({ success: true, message: 'Logged out successfully.' });
+  });
+});
+
