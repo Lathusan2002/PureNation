@@ -29,10 +29,29 @@ exports.getLeaderboard = async (req, res) => {
   const { type = "all-time" } = req.query;
 
   try {
-    const users = await User.find(
-      {},
-      "firstName lastName volunteerHours weeklyHours monthlyHours profilePicture"
-    ).lean();
+    // Select relevant fields only
+    const users = await User.find({})
+      .select("firstName lastName volunteerHours weeklyHours monthlyHours profilePicture")
+      .lean();
+
+    // Sort using a helper function (you can plug in filterLeaderboard here)
+    const sortedUsers = filterLeaderboard(users, type);
+
+    return res.status(200).json({
+      success: true,
+      count: sortedUsers.length,
+      leaderboard: sortedUsers,
+    });
+
+  } catch (error) {
+    console.error("Error fetching leaderboard:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch leaderboard.",
+      error: error.message,
+    });
+  }
+};
 
     // Fetch eventsParticipated count per user from Submission collection
     const leaderboard = await Promise.all(
