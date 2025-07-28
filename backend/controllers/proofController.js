@@ -1,25 +1,28 @@
-const Submission = require("../models/Submission");
-const User = require("../models/User");
-const Event = require("../models/Event");
-
 const submitProof = async (req, res) => {
   try {
     const { email, event, hours, description } = req.body;
     const file = req.file;
 
-    // Validate email presence
-    if (!email || typeof email !== 'string' || email.trim() === '') {
-      return res.status(400).json({ message: "Valid email is required." });
+    // Step 1: Validate input
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Email is required.",
+      });
     }
 
-    // Normalize email
+    // Step 2: Normalize email and find user
     const normalizedEmail = email.toLowerCase().trim();
-
-    // Find user by email
     const user = await User.findOne({ email: normalizedEmail });
+
     if (!user) {
-      return res.status(404).json({ message: "No user found with the provided email." });
+      return res.status(404).json({
+        success: false,
+        message: "No user found with the provided email.",
+      });
     }
+
+    const userId = user._id;
 
     // Continue with your logic here (e.g., saving proof, etc.)
     
@@ -65,18 +68,58 @@ const submitProof = async (req, res) => {
     await submission.save();
 
     // 7. Update user's volunteer hours
+   const submitProof = async (req, res) => {
+  try {
+    const { email, event, hours, description } = req.body;
+    const file = req.file;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Email is required.",
+      });
+    }
+
+    const normalizedEmail = email.toLowerCase().trim();
+    const user = await User.findOne({ email: normalizedEmail });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found with the provided email.",
+      });
+    }
+
+    const parsedHours = parseFloat(hours);
+    if (isNaN(parsedHours) || parsedHours <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid number of hours provided.",
+      });
+    }
+
+    const newSubmission = new Submission({
+      userId: user._id,
+      eventId: event,
+      hours: parsedHours,
+      description: description?.trim() || "",
+      proofFile: file ? `/uploads/${file.filename}` : null,
+    });
+
+    const submission = await newSubmission.save();
+
     user.volunteerHours = (user.volunteerHours || 0) + parsedHours;
     await user.save();
 
-    // 8. Send success response
-    res.status(201).json({
-      message: "Proof submitted successfully!",
+    return res.status(201).json({
+      success: true,
+      message: "Proof submitted successfully.",
       submission,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error submitting proof:", error);
     res.status(500).json({
-      message: "Failed to submit proof",
+      success: false,
+      message: "Failed to submit proof.",
       error: error.message,
     });
   }
