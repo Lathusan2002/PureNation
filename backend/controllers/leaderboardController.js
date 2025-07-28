@@ -55,25 +55,23 @@ exports.getLeaderboard = async (req, res) => {
 
     // Fetch eventsParticipated count per user from Submission collection
     const leaderboard = await Promise.all(
-      users.map(async (user) => {
-        const distinctEvents = await Submission.distinct("eventId", {
-          userId: user._id,
-        });
-        const hours = getHoursByType(user, type);
-        const fullName = `${user.firstName || ""} ${
-          user.lastName || ""
-        }`.trim();
+  users.map(async (user) => {
+    const [eventIds, hours] = await Promise.all([
+      Submission.distinct("eventId", { userId: user._id }),
+      Promise.resolve(getHoursByType(user, type)), // keeps parallel pattern
+    ]);
 
-        return {
-          id: user._id,
-          name: fullName,
-          points: hours * 50,
-          eventsParticipated: distinctEvents.length,
-          hoursContributed: hours,
-          profilePicture: user.profilePicture || null,
-        };
-      })
-    );
+    return {
+      id: user._id,
+      name: `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim(),
+      points: (hours || 0) * 50,
+      eventsParticipated: eventIds.length,
+      hoursContributed: hours || 0,
+      profilePicture: user.profilePicture || null,
+    };
+  })
+);
+
 
     // Sort leaderboard based on hours
     const sortedLeaderboard = filterLeaderboard(leaderboard, type);
