@@ -342,45 +342,50 @@
       </div>
     </footer>
 
-    <script>
-      document.getElementById("currentYear").textContent =
-        new Date().getFullYear();
+   <script>
+  // Set the current year in the footer
+  document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-      const form = document.querySelector(".register-form");
+  // Select the registration form
+  const registerForm = document.querySelector(".register-form");
 
-      form.addEventListener("submit", async function (event) {
-        event.preventDefault();
+  // Handle form submission
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        const formData = new FormData(form);
+    const formData = new FormData(registerForm);
 
-        const password = formData.get("password");
-        const confirmPassword = formData.get("confirmPassword");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
 
-        if (password !== confirmPassword) {
-          alert("Passwords do not match!");
-          return;
-        }
+    // Password check
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
 
-        try {
-          const res = await fetch("http://localhost:5000/api/auth/register", {
-            method: "POST",
-            body: formData,
-            credentials: "include",
-          });
-
-          const data = await res.json();
-
-          if (res.ok && data.success) {
-            alert("Registration successful! Redirecting to sign-in...");
-            window.location.href = "signin.html";
-          } else {
-            alert(data.message || "Registration failed.");
-          }
-        } catch (err) {
-          console.error("Registration error:", err);
-          alert("An error occurred during registration.");
-        }
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        body: formData,
+        credentials: "include", // for sending cookies if needed
       });
-    </script>
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert("Registration successful! Redirecting...");
+        registerForm.reset(); // clear the form
+        window.location.href = "signin.html";
+      } else {
+        alert(result.message || "Registration failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert("Something went wrong. Please check your internet connection.");
+    }
+  });
+</script>
+
   </body>
 </html>
