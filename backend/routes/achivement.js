@@ -8,11 +8,16 @@ const Achievement = require('../models/Achievement');
 router.get('/', async (req, res) => {
   try {
     const achievements = await Achievement.find({});
-    res.json(achievements);
+    res.status(200).json({
+      success: true,
+      data: achievements,
+    });
   } catch (error) {
+    console.error('Error fetching achievements:', error);
     res.status(500).json({
+      success: false,
       message: 'Failed to fetch achievements',
-      error: error.message
+      error: error.message,
     });
   }
 });
