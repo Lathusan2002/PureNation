@@ -173,9 +173,12 @@ if (existingParticipation) {
 // GET /api/events/:id
 exports.getEventById = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id);
+    const event = await Event.findById(req.params.id).lean();
     if (!event) {
-      return res.status(404).json({ message: "Event not found" });
+      return res.status(404).json({
+        success: false,
+        message: "Event not found",
+      });
     }
 
     const approvedCount = await Participation.countDocuments({
@@ -183,16 +186,23 @@ exports.getEventById = async (req, res) => {
       adminApproved: true,
     });
 
-    res.status(200).json({
-      ...event.toObject(),
-      approvedParticipants: approvedCount,
+    return res.status(200).json({
+      success: true,
+      event: {
+        ...event,
+        approvedParticipants: approvedCount,
+      },
     });
-  } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Error fetching event", error: err.message });
+  } catch (error) {
+    console.error("Error fetching event:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error fetching event",
+      error: error.message,
+    });
   }
 };
+
 
 // POST /api/events
 exports.createEvent = async (req, res) => {
