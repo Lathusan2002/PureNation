@@ -14,10 +14,15 @@ function filterLeaderboard(users, type) {
 
 // Helper: Get hours based on type
 function getHoursByType(user, type) {
-  if (type === "weekly") return user.weeklyHours || 0;
-  if (type === "monthly") return user.monthlyHours || 0;
-  return user.volunteerHours || 0;
+  const hoursMap = {
+    weekly: user.weeklyHours,
+    monthly: user.monthlyHours,
+    total: user.volunteerHours,
+  };
+
+  return hoursMap[type] ?? user.volunteerHours ?? 0;
 }
+
 
 // GET /api/leaderboard?type=weekly|monthly|all-time
 exports.getLeaderboard = async (req, res) => {
