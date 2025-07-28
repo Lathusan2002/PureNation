@@ -1,26 +1,30 @@
+const Participation = require('../models/Participation');
+
 app.post('/api/participation/approve', async (req, res) => {
-  const { userId, eventId } = req.body;
-
-  // Input validation
-  if (!userId || !eventId) {
-    return res.status(400).json({
-      success: false,
-      message: 'Both userId and eventId must be provided.',
-    });
-  }
-
   try {
-    const updateData = {
-      adminApproved: true,
-      approvedAt: new Date(),
-    };
+    const { userId, eventId } = req.body;
 
-    const result = await Participation.updateOne(
+    // Validate input
+    if (!userId || !eventId) {
+      return res.status(400).json({
+        success: false,
+        message: 'userId and eventId are required fields.',
+      });
+    }
+
+    // Update and return the updated document
+    const updatedParticipation = await Participation.findOneAndUpdate(
       { userId, eventId },
-      { $set: updateData }
+      {
+        $set: {
+          adminApproved: true,
+          approvedAt: new Date(),
+        },
+      },
+      { new: true } // Return the updated document
     );
 
-    if (result.matchedCount === 0) {
+    if (!updatedParticipation) {
       return res.status(404).json({
         success: false,
         message: 'Participation record not found.',
@@ -30,16 +34,17 @@ app.post('/api/participation/approve', async (req, res) => {
     return res.status(200).json({
       success: true,
       message: 'Participation approved successfully.',
-      updatedCount: result.modifiedCount,
+      data: updatedParticipation,
     });
-  } catch (error) {
-    console.error('Error approving participation:', error);
+  } catch (err) {
+    console.error('Error during participation approval:', err.message);
     return res.status(500).json({
       success: false,
-      message: 'An error occurred while approving participation.',
+      message: 'Internal server error while approving participation.',
     });
   }
 });
+
 
     // Check if a document was actually updated
     if (result.modifiedCount === 0) {
