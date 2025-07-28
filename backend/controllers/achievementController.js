@@ -5,15 +5,21 @@ exports.getAchievements = async (req, res) => {
   try {
     const achievements = await Achievement.find().lean();
 
-    res.json(achievements);
-  } catch (error) {
-    res.status(500).json({
+    return res.status(200).json({
+      success: true,
+      message: 'Achievements fetched successfully',
+      data: achievements,
+    });
+  } catch (err) {
+    console.error('Error fetching achievements:', err);
+
+    return res.status(500).json({
       success: false,
-      message: 'Failed to fetch achievements',
-      error: error.message,
+      message: 'An error occurred while fetching achievements',
     });
   }
 };
+
 
 // (Optional) POST /api/achievements — Admin-only feature
 exports.createAchievement = async (req, res) => {
