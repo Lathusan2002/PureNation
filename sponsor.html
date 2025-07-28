@@ -171,52 +171,50 @@
       </div>
     </footer>
 
-    <script>
-      // Handle sponsor form submission
-      document
-        .getElementById("sponsorForm")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
+   <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sponsorForm = document.getElementById("sponsorForm");
+    const formMessage = document.getElementById("formMessage");
 
-          const form = e.target;
-          const formMessage = document.getElementById("formMessage");
+    sponsorForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-          const data = {
-            name: form[0].value,
-            email: form[1].value,
-            organization: form[2].value,
-            phone: form[3].value,
-            message: form[4].value,
-          };
+      // Get form field values using names for better clarity
+      const name = sponsorForm.querySelector('[name="name"]').value.trim();
+      const email = sponsorForm.querySelector('[name="email"]').value.trim();
+      const organization = sponsorForm.querySelector('[name="organization"]').value.trim();
+      const phone = sponsorForm.querySelector('[name="phone"]').value.trim();
+      const message = sponsorForm.querySelector('[name="message"]').value.trim();
 
-          try {
-            const response = await fetch("/api/sponsors", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(data),
-            });
+      const formData = { name, email, organization, phone, message };
 
-            if (response.ok) {
-              formMessage.textContent =
-                "Thank you for becoming a sponsor! We will contact you soon.";
-              formMessage.classList.remove("error");
-              form.reset();
-            } else {
-              formMessage.textContent =
-                "There was an error. Please try again later.";
-              formMessage.classList.add("error");
-            }
-          } catch (error) {
-            console.error("Submission error:", error);
-            formMessage.textContent =
-              "Submission failed. Check your network or try again.";
-            formMessage.classList.add("error");
-          }
+      try {
+        const res = await fetch("/api/sponsors", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
         });
 
-      // Set current year in footer
-      document.getElementById("currentYear").textContent =
-        new Date().getFullYear();
-    </script>
+        if (res.ok) {
+          formMessage.textContent = "✅ Thank you for sponsoring! We'll contact you shortly.";
+          formMessage.classList.remove("error");
+          formMessage.classList.add("success");
+          sponsorForm.reset();
+        } else {
+          formMessage.textContent = "❌ Something went wrong. Please try again later.";
+          formMessage.classList.add("error");
+        }
+      } catch (err) {
+        console.error("Error submitting form:", err);
+        formMessage.textContent = "⚠️ Network error. Please check your connection.";
+        formMessage.classList.add("error");
+      }
+    });
+
+    // Footer year
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+  });
+</script>
+
   </body>
 </html>
