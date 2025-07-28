@@ -1,29 +1,32 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const SponsorSchema = new mongoose.Schema(
+const sponsorSchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Sponsor name is required"],
+      required: true,
       trim: true,
     },
     email: {
       type: String,
-      required: [true, "Email is required"],
-      lowercase: true,
+      required: true,
       trim: true,
+      lowercase: true,
+      match: [/^\S+@\S+\.\S+$/, 'Invalid email format'],
     },
     organization: {
       type: String,
       trim: true,
+      default: '',
     },
     phone: {
       type: String,
       trim: true,
+      default: '',
     },
     message: {
       type: String,
-      required: [true, "Message is required"],
+      required: true,
       trim: true,
     },
     isFeatured: {
@@ -33,15 +36,17 @@ const SponsorSchema = new mongoose.Schema(
     logoUrl: {
       type: String,
       trim: true,
+      default: '',
     },
     description: {
       type: String,
       trim: true,
+      default: '',
     },
   },
   {
-    timestamps: true, // adds createdAt and updatedAt automatically
+    timestamps: true, // Auto adds createdAt and updatedAt
   }
 );
 
-module.exports = mongoose.model('Sponsor', SponsorSchema);
+module.exports = model('Sponsor', sponsorSchema);
