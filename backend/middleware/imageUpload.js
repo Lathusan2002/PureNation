@@ -26,18 +26,17 @@ const allowedMimeTypes = [
 ];
 
 const fileFilter = (req, file, cb) => {
+  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(
-      new multer.MulterError(
-        "LIMIT_UNEXPECTED_FILE",
-        "Only JPEG, PNG, GIF images and PDFs are allowed."
-      ),
-      false
-    );
+    const error = new multer.MulterError('LIMIT_UNEXPECTED_FILE');
+    error.message = 'Only JPEG, PNG, GIF images, and PDF files are allowed.';
+    cb(error, false);
   }
 };
+
 
 const upload = multer({
   storage,
