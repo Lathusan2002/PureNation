@@ -263,40 +263,49 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script>
-    document.getElementById("currentYear").textContent = new Date().getFullYear();
-
-    async function joinVolunteerOpportunity() {
-      const userId = localStorage.getItem('userId');
-      const opportunityId = '64fb1234c61a872b43ffffee';
-
-      if (!userId) {
-        alert('Please log in first to join an opportunity.');
-        window.location.href = 'signin.html';
-        return;
-      }
-
-      try {
-        const response = await fetch('/api/involvement/join-volunteer', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, opportunityId })
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-          alert('You’ve successfully joined the opportunity!');
-        } else {
-          alert('Error: ' + result.message);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Something went wrong. Try again later.');
-      }
+ <script>
+  // Set the current year in the footer
+  document.addEventListener("DOMContentLoaded", () => {
+    const yearElement = document.getElementById("currentYear");
+    if (yearElement) {
+      yearElement.textContent = new Date().getFullYear();
     }
-  </script>
+  });
+
+  // Join Volunteer Opportunity
+  async function joinVolunteerOpportunity() {
+    const userId = localStorage.getItem('userId');
+    const opportunityId = '64fb1234c61a872b43ffffee';
+
+    if (!userId) {
+      alert('Please log in to join this opportunity.');
+      window.location.href = 'signin.html';
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/involvement/join-volunteer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId, opportunityId })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to join opportunity.');
+      }
+
+      alert('You’ve successfully joined the opportunity!');
+    } catch (error) {
+      console.error('Join error:', error);
+      alert(`Error: ${error.message}`);
+    }
+  }
+</script>
+
 </body>
 
 </html>
