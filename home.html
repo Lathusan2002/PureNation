@@ -24,26 +24,38 @@
   <!-- Load Footer -->
   <div id="footer"></div>
 
-  <!-- Script for dynamic header/footer and login status -->
-  <script>
-    // Inject header and footer
-    fetch("header.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("header").innerHTML = data);
+<!-- Script for dynamic header/footer and login status -->
+<script>
+  // Load external HTML into specified element
+  async function loadHTML(selector, file) {
+    try {
+      const response = await fetch(file);
+      if (!response.ok) throw new Error(`Failed to load ${file}`);
+      const html = await response.text();
+      const container = document.getElementById(selector);
+      if (container) container.innerHTML = html;
+    } catch (error) {
+      console.error(`Error loading ${file}:`, error);
+    }
+  }
 
-    fetch("footer.html")
-      .then(res => res.text())
-      .then(data => document.getElementById("footer").innerHTML = data);
+  // Update button text and link if user is logged in
+  function updateActionButton() {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const actionBtn = document.getElementById("action-btn");
+    if (isLoggedIn && actionBtn) {
+      actionBtn.textContent = "Profile";
+      actionBtn.href = "profile.html";
+    }
+  }
 
-    // Change action button if user is logged in
-    window.addEventListener("DOMContentLoaded", () => {
-      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-      const actionBtn = document.getElementById("action-btn");
-      if (isLoggedIn && actionBtn) {
-        actionBtn.textContent = "Profile";
-        actionBtn.href = "profile.html";
-      }
-    });
-  </script>
+  // Run on page load
+  window.addEventListener("DOMContentLoaded", () => {
+    loadHTML("header", "header.html");
+    loadHTML("footer", "footer.html");
+    updateActionButton();
+  });
+</script>
+
 </body>
 </html>
