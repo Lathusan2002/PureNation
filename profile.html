@@ -16,15 +16,22 @@
       min-height: 60vh;
     }
     .profile-card {
-      background: #fff;
-      padding: 2rem 2.5rem;
-      max-width: 420px;
-      width: 100%;
-      box-shadow: 0 2px 12px rgba(44,62,80,0.07);
-      border-radius: 12px;
-      text-align: left;
-      margin-top: 1.5rem;
-    }
+  background-color: #ffffff;
+  padding: 1.75rem 2rem;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  text-align: left;
+  margin: 2rem auto;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.profile-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}
+
     .profile-card p {
       margin: 0.75rem 0;
       font-size: 1.05rem;
